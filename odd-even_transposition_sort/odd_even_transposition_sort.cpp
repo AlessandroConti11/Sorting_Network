@@ -1,9 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
-
+#include "odd_even_transposition_sort.h"
 
 /**
  * Odd-even transposition sort.
@@ -15,7 +10,7 @@ using namespace std;
  *
  * @param unsorted_array the unsorted array.
  */
-void odd_even_transposition_sort(vector<int>& unsorted_array) {
+void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsorted_array) {
     ///Array size.
     int array_size = unsorted_array.size();
     ///The array is is_sorted or not.
@@ -41,22 +36,4 @@ void odd_even_transposition_sort(vector<int>& unsorted_array) {
             }
         }
     }
-}
-
-
-int main() {
-    vector<int> arr = {2, 1, 4, 9, 5, 3, 6, 10, 8, 7};
-
-    cout << "Unsorted vector\n";
-    ranges::for_each(arr, [](int num) { cout << num << " "; });
-    cout << endl;
-    cout << "\n\n";
-
-    odd_even_transposition_sort(arr);
-
-    cout << "sorted vector\n";
-    ranges::for_each(arr, [](int num) { cout << num << " "; });
-    cout << endl;
-
-    return 0;
 }
