@@ -1,5 +1,6 @@
 #include <algorithm>
 
+#include "bubble_sort/bubble_sort.h"
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
 
@@ -39,8 +40,9 @@ void print_vector(vector<int>& vector) {
 
 int main() {
     cout << "Which sorting network algorithm do you want to test?\n"
-            "1. Odd-even transposition sort\n"
-            "2. Odd-even mergesort\n\n"
+            "1. Bubble sort\n"
+            "2. Odd-even transposition sort\n"
+            "3. Odd-even mergesort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -52,15 +54,20 @@ int main() {
 
     switch (choice) {
         case 1:
-            Odd_Even_Transposition_Sort oddEvenTranspositionSort;
-
             cout << "Before sorting it:\n";
             print_vector(array);
-            oddEvenTranspositionSort.odd_even_transposition_sort(array);
+            Bubble_Sort::bubble_Sort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
         case 2:
+            cout << "Before sorting it:\n";
+            print_vector(array);
+            Odd_Even_Transposition_Sort::odd_even_transposition_sort(array);
+            cout << "\nAfter sorting it:\n";
+            print_vector(array);
+            break;
+        case 3:
             Odd_Even_Mergesort oddEvenMergesort;
 
             cout << "Before sorting it:\n";
