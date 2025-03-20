@@ -3,6 +3,7 @@
 #include "bubble_sort/bubble_sort.h"
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
+#include "bitonic_sor/bitonic_sort.h"
 
 using namespace std;
 
@@ -40,9 +41,10 @@ void print_vector(vector<int>& vector) {
 
 int main() {
     cout << "Which sorting network algorithm do you want to test?\n"
-            "1. Bubble sort\n"
-            "2. Odd-even transposition sort\n"
-            "3. Odd-even mergesort\n\n"
+            "1. Bubble bitonic_sort\n"
+            "2. Odd-even transposition bitonic_sort\n"
+            "3. Odd-even mergesort\n"
+            "4. Bitonic sort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -73,6 +75,15 @@ int main() {
             cout << "Before sorting it:\n";
             print_vector(array);
             oddEvenMergesort.odd_even_mergesort(array);
+            cout << "\nAfter sorting it:\n";
+            print_vector(array);
+            break;
+        case 4:
+            Bitonic_Sort bitonicSort;
+
+            cout << "Before sorting it:\n";
+            print_vector(array);
+            bitonicSort.bitonic_sort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;

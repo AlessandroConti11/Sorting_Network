@@ -56,11 +56,11 @@ void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, int start_position, 
 }
 
 /**
- * The function compares and swap two elements when the first is greater than the second.
+ * The function compares and swaps two elements when the first is greater than the second.
  *
  * @param array the unsorted array.
- * @param first_index The index of the first element to be swapped.
- * @param second_index The index of the second element to be swapped.
+ * @param first_index the index of the first element to be swapped.
+ * @param second_index the index of the second element to be swapped.
  */
 void Odd_Even_Mergesort::compare_and_swap(vector<int>& array, int first_index, int second_index) {
     if (array[first_index] > array[second_index]) {
