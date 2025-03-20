@@ -11,4 +11,6 @@ add_executable(sorting_network odd-even_transposition_sort/odd_even_transpositio
         bubble_sort/bubble_sort.cpp
         bubble_sort/bubble_sort.h
         bitonic_sort/bitonic_sort.cpp
-        bitonic_sort/bitonic_sort.h)
+        bitonic_sort/bitonic_sort.h
+        adapted_bitonic_sort/adapted_bitonic_sort.cpp
+        adapted_bitonic_sort/adapted_bitonic_sort.h)

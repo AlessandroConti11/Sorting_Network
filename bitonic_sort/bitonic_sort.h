@@ -24,5 +24,4 @@ private:
 };
 
 
-
 #endif //SORTING_NETWORK_BITONIC_SORT_H

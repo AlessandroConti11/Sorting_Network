@@ -1,10 +1,10 @@
 #include "odd_even_transposition_sort.h"
 
 /**
- * Odd-even transposition bitonic_sort.
+ * Odd-even transposition adapted_bitonic_sort.
  *
  * @details
- * Odd-even transposition bitonic_sort step:
+ * Odd-even transposition adapted_bitonic_sort step:
  *  1. odd phase
  *  2. even phase
  *
