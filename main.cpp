@@ -6,6 +6,7 @@
 #include "bitonic_sort/bitonic_sort.h"
 #include "adapted_bitonic_sort/adapted_bitonic_sort.h"
 #include "ls3_sort/ls3_sort.h"
+#include "4-way_mergesort/four_way_mergesort.h"
 
 using namespace std;
 
@@ -64,6 +65,11 @@ vector<vector<int>> create_matrix() {
     return matrix;
 }
 
+/**
+ * Function that prints a matrix.
+ *
+ * @param matrix the matrix to print.
+ */
 void print_matrix(const vector<vector<int>>& matrix) {
     for (const auto& row : matrix) {
         for (int num : row) {
@@ -81,7 +87,8 @@ int main() {
             "3. Odd-even mergesort\n"
             "4. Bitonic sort\n"
             "5. Bitonic sort for arbitrary n\n"
-            "6. LS3 sort\n\n"
+            "6. LS3 sort\n"
+            "7. 4-way mergesort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -154,6 +161,16 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;
+        case 7:
+            matrix = create_matrix();
+
+            Four_Way_Mergesort fourWayMergesort;
+
+            cout << "Before sorting it:\n";
+            print_matrix(matrix);
+            fourWayMergesort.four_way_mergesort(matrix);
+            cout << "\nAfter sorting it:\n";
+            print_matrix(matrix);
         default:
             break;
     }
