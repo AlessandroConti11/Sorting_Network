@@ -6,6 +6,7 @@
 #include "adapted_bitonic_sort/adapted_bitonic_sort.h"
 #include "ls3_sort/ls3_sort.h"
 #include "4-way_mergesort/four_way_mergesort.h"
+#include "rotatesort/rotatesort.h"
 
 using namespace std;
 
@@ -86,7 +87,8 @@ int main() {
             "3. Bitonic sort\n"
             "4. Bitonic sort for arbitrary n\n"
             "5. LS3 sort\n"
-            "6. 4-way mergesort\n\n"
+            "6. 4-way mergesort\n"
+            "7. Rotatesort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -160,6 +162,16 @@ int main() {
             fourWayMergesort.four_way_mergesort(matrix);
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
+            break;
+        case 7:
+            matrix = create_matrix();
+
+            cout << "Before sorting it:\n";
+            print_matrix(matrix);
+            Rotatesort::rotatesort(matrix);
+            cout << "\nAfter sorting it:\n";
+            print_matrix(matrix);
+            break;
         default:
             break;
     }

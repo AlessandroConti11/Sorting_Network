@@ -15,4 +15,6 @@ add_executable(sorting_network main.cpp
         ls3_sort/ls3_sort.cpp
         ls3_sort/ls3_sort.h
         4-way_mergesort/four_way_mergesort.cpp
-        4-way_mergesort/four_way_mergesort.h)
+        4-way_mergesort/four_way_mergesort.h
+        rotatesort/rotatesort.cpp
+        rotatesort/rotatesort.h)
