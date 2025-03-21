@@ -11,7 +11,7 @@
  * @param matrix the unsorted matrix.
  */
 void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
-    sort_ls3(matrix, matrix.size());
+    sort_ls3(matrix, (int) matrix.size());
 }
 
 
@@ -170,7 +170,7 @@ vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matri
  * @param column the column.
  */
 void LS3_Sort::insertSubMatrix(vector<vector<int>>& matrix, const vector<vector<int>>& sub_matrix, int row, int column) {
-    int submatrix_size = sub_matrix.size();
+    int submatrix_size = (int) sub_matrix.size();
 
     for (int i = 0; i < submatrix_size; i++) {
         copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);
