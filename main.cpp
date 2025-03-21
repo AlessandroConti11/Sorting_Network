@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ranges>
+
 
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
@@ -7,6 +9,7 @@
 #include "ls3_sort/ls3_sort.h"
 #include "4-way_mergesort/four_way_mergesort.h"
 #include "rotatesort/rotatesort.h"
+#include "3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h"
 
 using namespace std;
 
@@ -88,7 +91,8 @@ int main() {
             "4. Bitonic sort for arbitrary n\n"
             "5. LS3 sort\n"
             "6. 4-way mergesort\n"
-            "7. Rotatesort\n\n"
+            "7. Rotatesort\n"
+            "8. 3n-sort of Schnorr and Shamir\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -159,6 +163,15 @@ int main() {
             cout << "Before sorting it:\n";
             print_matrix(matrix);
             Rotatesort::rotatesort(matrix);
+            cout << "\nAfter sorting it:\n";
+            print_matrix(matrix);
+            break;
+        case 8:
+            matrix = create_matrix();
+
+            cout << "Before sorting it:\n";
+            print_matrix(matrix);
+            Three_N_Sort_Schnorr_and_Shamir::three_n_sort(matrix);
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;

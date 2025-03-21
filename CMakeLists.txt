@@ -17,4 +17,6 @@ add_executable(sorting_network main.cpp
         4-way_mergesort/four_way_mergesort.cpp
         4-way_mergesort/four_way_mergesort.h
         rotatesort/rotatesort.cpp
-        rotatesort/rotatesort.h)
+        rotatesort/rotatesort.h
+        3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.cpp
+        3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h)
