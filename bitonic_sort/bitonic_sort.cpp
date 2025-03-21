@@ -9,7 +9,7 @@
  * @param array the unsorted array.
  */
 void Bitonic_Sort::bitonic_sort(std::vector<int>& array) {
-    sort_bitonic(array, 0, array.size(), Bitonic_Sort::ASCENDING);
+    sort_bitonic(array, 0, static_cast<int>(array.size()), Bitonic_Sort::ASCENDING);
 }
 
 
@@ -21,9 +21,9 @@ void Bitonic_Sort::bitonic_sort(std::vector<int>& array) {
  * @param finish_position the finishing position.
  * @param direction the sorting direction.
  */
-void Bitonic_Sort::sort_bitonic(vector<int> &array, int start_position, int finish_position, bool direction) {
+void Bitonic_Sort::sort_bitonic(vector<int> &array, const int start_position, const int finish_position, const bool direction) {
     if(finish_position > 1) {
-        int m = finish_position / 2;
+        const int m = finish_position / 2;
 
         sort_bitonic(array, start_position, m, Bitonic_Sort::ASCENDING);
         sort_bitonic(array, start_position + m, m, Bitonic_Sort::DESCENDING);
@@ -40,9 +40,9 @@ void Bitonic_Sort::sort_bitonic(vector<int> &array, int start_position, int fini
  * @param finish_position the finishing position.
  * @param direction the sorting direction.
  */
-void Bitonic_Sort::merge_bitonic(vector<int> &array, int start_position, int finish_position, bool direction) {
+void Bitonic_Sort::merge_bitonic(vector<int> &array, const int start_position, const int finish_position, const bool direction) {
     if(finish_position > 1) {
-        int m = finish_position / 2;
+        const int m = finish_position / 2;
 
         for (int i = start_position; i < start_position + m; ++i) {
             compare_and_swap(array, i, i + m, direction);
@@ -61,7 +61,7 @@ void Bitonic_Sort::merge_bitonic(vector<int> &array, int start_position, int fin
  * @param second_index the index of the second element to be swapped.
  * @param direction the sorting direction.
  */
-void Bitonic_Sort::compare_and_swap(vector<int> &array, int first_index, int second_index, bool direction) {
+void Bitonic_Sort::compare_and_swap(vector<int> &array, const int first_index, const int second_index, const bool direction) {
     if(direction == (array[first_index] > array[second_index])) {
         swap(array[first_index], array[second_index]);
     }

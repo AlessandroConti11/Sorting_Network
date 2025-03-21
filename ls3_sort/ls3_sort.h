@@ -2,20 +2,18 @@
 #define SORTING_NETWORK_LS3_SORT_H
 
 
-#include <iostream>
 #include <vector>
 #include <algorithm>
 #include "../odd-even_transposition_sort/odd_even_transposition_sort.h"
-
 using namespace std;
 
 
 class LS3_Sort {
 public:
-    void ls3_sort(vector<vector<int>>& matrix);
+    static void ls3_sort(vector<vector<int>>& matrix);
 
 private:
-    void sort_ls3(vector<vector<int>>& matrix, int n);
+    static void sort_ls3(vector<vector<int>>& matrix, int n);
     static void merge_ls3(vector<vector<int>>& matrix, int k);
 
     static void shuffle(vector<vector<int>>& matrix, int n);

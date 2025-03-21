@@ -1,18 +1,15 @@
 #include "odd_even_transposition_sort.h"
 
 /**
- * Odd-even transposition adapted_bitonic_sort.
+ * Odd-even transposition sort.
  *
- * @details
- * Odd-even transposition adapted_bitonic_sort step:
- *  1. odd phase
- *  2. even phase
+ * @details Odd-even transposition sort step: \n 1. odd phase; \n 2. even phase.
  *
  * @param unsorted_array the unsorted array.
  */
 void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsorted_array) {
     ///Array size.
-    int array_size = unsorted_array.size();
+    const int array_size = static_cast<int>(unsorted_array.size());
     ///The array is is_sorted or not.
     bool is_sorted = false;
 

@@ -1,4 +1,4 @@
-#include <algorithm>
+#include <iostream>
 
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
@@ -111,55 +111,45 @@ int main() {
         case 2:
             array = create_vector();
 
-            Odd_Even_Mergesort oddEvenMergesort;
-
             cout << "Before sorting it:\n";
             print_vector(array);
-            oddEvenMergesort.odd_even_mergesort(array);
+            Odd_Even_Mergesort::odd_even_mergesort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
         case 3:
             array = create_vector();
 
-            Bitonic_Sort bitonicSort;
-
             cout << "Before sorting it:\n";
             print_vector(array);
-            bitonicSort.bitonic_sort(array);
+            Bitonic_Sort::bitonic_sort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
         case 4:
             array = create_vector();
 
-            Adapted_Bitonic_Sort adaptedBitonicSort;
-
             cout << "Before sorting it:\n";
             print_vector(array);
-            adaptedBitonicSort.adapted_bitonic_sort(array);
+            Adapted_Bitonic_Sort::adapted_bitonic_sort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
         case 5:
             matrix = create_matrix();
 
-            LS3_Sort ls3Sort;
-
             cout << "Before sorting it:\n";
             print_matrix(matrix);
-            ls3Sort.ls3_sort(matrix);
+            LS3_Sort::ls3_sort(matrix);
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;
         case 6:
             matrix = create_matrix();
 
-            Four_Way_Mergesort fourWayMergesort;
-
             cout << "Before sorting it:\n";
             print_matrix(matrix);
-            fourWayMergesort.four_way_mergesort(matrix);
+            Four_Way_Mergesort::four_way_mergesort(matrix);
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;

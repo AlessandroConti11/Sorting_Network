@@ -11,7 +11,7 @@
  * @param matrix the unsorted matrix.
  */
 void Four_Way_Mergesort::four_way_mergesort(vector<vector<int>> &matrix) {
-    roughsort(matrix, (int) matrix.size());
+    roughsort(matrix, static_cast<int>(matrix.size()));
     sort_rows(matrix);
 }
 
@@ -24,9 +24,9 @@ void Four_Way_Mergesort::four_way_mergesort(vector<vector<int>> &matrix) {
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
  */
-void Four_Way_Mergesort::roughsort(vector<vector<int>> &matrix, int k) {
+void Four_Way_Mergesort::roughsort(vector<vector<int>> &matrix, const int k) {
     if(k > 1) {
-        int m = k / 2;
+        const int m = k / 2;
 
         roughsort(matrix, m);
         merge_four_way_mergesort(matrix);
@@ -39,8 +39,8 @@ void Four_Way_Mergesort::roughsort(vector<vector<int>> &matrix, int k) {
  * @param matrix the unsorted array.
  */
 void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
-    int k = (int) matrix.size();
-    int m = k / 2;
+    const int k = static_cast<int>(matrix.size());
+    const int m = k / 2;
 
     //sort rows in subarrays
     for (int i = 0; i < m; i++) { //ascending in the upper subarrays
@@ -82,7 +82,7 @@ void Four_Way_Mergesort::sort_rows(vector<vector<int>> &matrix) {
  * @param matrix the unsorted matrix.
  */
 void Four_Way_Mergesort::sort_columns(vector<vector<int>> &matrix) {
-    int n = (int) matrix.size();
+    const int n = static_cast<int>(matrix.size());
 
     for (int j = 0; j < n; j++) {
         vector<int> column(n);

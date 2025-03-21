@@ -2,7 +2,6 @@
 #define SORTING_NETWORK_ODD_EVEN_TRANSPOSITION_SORT_H
 
 
-#include <iostream>
 #include <vector>
 using namespace std;
 

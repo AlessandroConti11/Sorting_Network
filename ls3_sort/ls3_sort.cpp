@@ -11,7 +11,7 @@
  * @param matrix the unsorted matrix.
  */
 void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
-    sort_ls3(matrix, (int) matrix.size());
+    sort_ls3(matrix, static_cast<int>(matrix.size()));
 }
 
 
@@ -21,9 +21,9 @@ void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
  */
-void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, int n) {
+void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, const int n) {
     if(n > 1) {
-        int half = n / 2;
+        const int half = n / 2;
 
         //define the 4 {n/2 X n/2}-subarray
         vector<vector<int>> sub_matrix_1 = extract_submatrix(matrix, 0, 0, half);
@@ -54,7 +54,7 @@ void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, int n) {
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
  */
-void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, int k) {
+void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, const int k) {
     shuffle(matrix, k);
     sort_double_column_in_snake_direction(matrix, k);
     oets_step(matrix, k);
@@ -67,7 +67,7 @@ void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, int k) {
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
  */
-void LS3_Sort::shuffle(vector<vector<int>>& matrix, int n) {
+void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
     for (int i = 0; i < n; i++) {
         if (i % 2 == 1) {
             reverse(matrix[i].begin(), matrix[i].end());
@@ -81,7 +81,7 @@ void LS3_Sort::shuffle(vector<vector<int>>& matrix, int n) {
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
  */
-void LS3_Sort::oets_step(vector<vector<int>>& matrix, int n) {
+void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
     vector<int> flattened;
 
     for (size_t i = 0; i < matrix.size(); i++) {
@@ -118,7 +118,7 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, int n) {
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
  */
-void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix, int n) {
+void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix, const int n) {
     for (int j = 0; j < n; j += 2) {
         vector<int> column;
 
@@ -151,8 +151,8 @@ void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix
  * @param submatrix_size the submatrix size.
  * @return the submatrix.
  */
-vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matrix, int row, int column, int submatrix_size) {
-    vector<vector<int>> sub_matrix(submatrix_size, vector<int>(submatrix_size));
+vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matrix, const int row, const int column, const int submatrix_size) {
+    vector sub_matrix(submatrix_size, vector<int>(submatrix_size));
 
     for (int i = 0; i < submatrix_size; i++) {
         copy(matrix[row + i].begin() + column, matrix[row + i].begin() + column + submatrix_size, sub_matrix[i].begin());
@@ -169,8 +169,8 @@ vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matri
  * @param row the row.
  * @param column the column.
  */
-void LS3_Sort::insertSubMatrix(vector<vector<int>>& matrix, const vector<vector<int>>& sub_matrix, int row, int column) {
-    int submatrix_size = (int) sub_matrix.size();
+void LS3_Sort::insertSubMatrix(vector<vector<int>>& matrix, const vector<vector<int>>& sub_matrix, const int row, const int column) {
+    const int submatrix_size = static_cast<int>(sub_matrix.size());
 
     for (int i = 0; i < submatrix_size; i++) {
         copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);

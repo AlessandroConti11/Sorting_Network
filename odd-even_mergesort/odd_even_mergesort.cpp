@@ -9,7 +9,7 @@
  * @param array the unsorted array.
  */
 void Odd_Even_Mergesort::odd_even_mergesort(vector<int>& array) {
-    mergesort_odd_even(array, 0, (int) array.size());
+    mergesort_odd_even(array, 0, static_cast<int>(array.size()));
 }
 
 
@@ -20,10 +20,10 @@ void Odd_Even_Mergesort::odd_even_mergesort(vector<int>& array) {
  * @param start_position the starting position.
  * @param finish_position the finishing position.
  */
-void Odd_Even_Mergesort::mergesort_odd_even(vector<int>& array, int start_position, int finish_position) {
+void Odd_Even_Mergesort::mergesort_odd_even(vector<int>& array, const int start_position, const int finish_position) {
     if (finish_position > 1) {
         ///The midpoint.
-        int midpoint = finish_position / 2;
+        const int midpoint = finish_position / 2;
         
         mergesort_odd_even(array, start_position, midpoint);
         mergesort_odd_even(array, start_position + midpoint, midpoint);
@@ -39,11 +39,8 @@ void Odd_Even_Mergesort::mergesort_odd_even(vector<int>& array, int start_positi
  * @param finish_position the finishing position.
  * @param distance_to_compare the distance of the elements to be compared
  */
-void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, int start_position, int finish_position, int distance_to_compare) {
-    ///Distance between the elements that are to be compared and exchanged.
-    int m = distance_to_compare * 2;
-
-    if (m < finish_position) {
+void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, const int start_position, const int finish_position, const int distance_to_compare) {
+    if (const int m = distance_to_compare * 2; m < finish_position) {
         merge_odd_even(array, start_position, finish_position, m);
         merge_odd_even(array, start_position + distance_to_compare, finish_position, m);
 
@@ -62,7 +59,7 @@ void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, int start_position, 
  * @param first_index the index of the first element to be swapped.
  * @param second_index the index of the second element to be swapped.
  */
-void Odd_Even_Mergesort::compare_and_swap(vector<int>& array, int first_index, int second_index) {
+void Odd_Even_Mergesort::compare_and_swap(vector<int>& array, const int first_index, const int second_index) {
     if (array[first_index] > array[second_index]) {
         swap(array[first_index], array[second_index]);
     }
