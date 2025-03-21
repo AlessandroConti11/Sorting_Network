@@ -3,13 +3,11 @@ project(sorting_network)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(sorting_network odd-even_transposition_sort/odd_even_transposition_sort.cpp
+add_executable(sorting_network main.cpp
+        odd-even_transposition_sort/odd_even_transposition_sort.cpp
         odd-even_mergesort/odd_even_mergesort.cpp
         odd-even_mergesort/odd_even_mergesort.h
         odd-even_transposition_sort/odd_even_transposition_sort.h
-        main.cpp
-        bubble_sort/bubble_sort.cpp
-        bubble_sort/bubble_sort.h
         bitonic_sort/bitonic_sort.cpp
         bitonic_sort/bitonic_sort.h
         adapted_bitonic_sort/adapted_bitonic_sort.cpp

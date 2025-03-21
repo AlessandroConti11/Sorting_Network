@@ -1,6 +1,5 @@
 #include <algorithm>
 
-#include "bubble_sort/bubble_sort.h"
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
 #include "bitonic_sort/bitonic_sort.h"
@@ -82,13 +81,12 @@ void print_matrix(const vector<vector<int>>& matrix) {
 
 int main() {
     cout << "Which sorting network algorithm do you want to test?\n"
-            "1. Bubble adapted_bitonic_sort\n"
-            "2. Odd-even transposition adapted_bitonic_sort\n"
-            "3. Odd-even mergesort\n"
-            "4. Bitonic sort\n"
-            "5. Bitonic sort for arbitrary n\n"
-            "6. LS3 sort\n"
-            "7. 4-way mergesort\n\n"
+            "1. Odd-even transposition sort\n"
+            "2. Odd-even mergesort\n"
+            "3. Bitonic sort\n"
+            "4. Bitonic sort for arbitrary n\n"
+            "5. LS3 sort\n"
+            "6. 4-way mergesort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -104,20 +102,11 @@ int main() {
 
             cout << "Before sorting it:\n";
             print_vector(array);
-            Bubble_Sort::bubble_Sort(array);
-            cout << "\nAfter sorting it:\n";
-            print_vector(array);
-            break;
-        case 2:
-            array = create_vector();
-
-            cout << "Before sorting it:\n";
-            print_vector(array);
             Odd_Even_Transposition_Sort::odd_even_transposition_sort(array);
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
-        case 3:
+        case 2:
             array = create_vector();
 
             Odd_Even_Mergesort oddEvenMergesort;
@@ -128,7 +117,7 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
-        case 4:
+        case 3:
             array = create_vector();
 
             Bitonic_Sort bitonicSort;
@@ -139,7 +128,7 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
-        case 5:
+        case 4:
             array = create_vector();
 
             Adapted_Bitonic_Sort adaptedBitonicSort;
@@ -150,7 +139,7 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_vector(array);
             break;
-        case 6:
+        case 5:
             matrix = create_matrix();
 
             LS3_Sort ls3Sort;
@@ -161,7 +150,7 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;
-        case 7:
+        case 6:
             matrix = create_matrix();
 
             Four_Way_Mergesort fourWayMergesort;
