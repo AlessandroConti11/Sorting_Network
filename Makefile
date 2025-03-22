@@ -3,7 +3,7 @@ EXECUTABLE = sorting_network
 
 #Compiler
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -O2
+CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -O2
 
 #Source directories
 SRC_DIRS = odd-even_transposition_sort \
