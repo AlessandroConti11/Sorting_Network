@@ -4,7 +4,7 @@
 /**
  * Bitonic Sort
  *
- * @attention work only with array.size() divisible by 2^k.
+ * @warning work only with array.size() divisible by 2^k.
  *
  * @param array the unsorted array.
  */

@@ -4,7 +4,7 @@
 /**
  * 4-way mergesort.
  *
- * @attention work only with a squared matrix.
+ * @warning work only with a squared matrix.
  *
  * @details the sorted matrix is sorted in row-major direction.
  *

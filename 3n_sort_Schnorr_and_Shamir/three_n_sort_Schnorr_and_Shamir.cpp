@@ -4,7 +4,7 @@
 /**
  * 3n-sort of Schnorr and Shamir.
  *
- * @attention work only with a squared matrix.
+ * @warning work only with a squared matrix.
  *
  * @details the sorted matrix is sorted in snake direction.
  *

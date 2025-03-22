@@ -4,7 +4,7 @@
 /**
  * 2D odd-even transposition sort.
  *
- * @attention work only with a squared matrix.
+ * @warning work only with a squared matrix.
  *
  * @details the sorted matrix is sorted in snake direction.
  *

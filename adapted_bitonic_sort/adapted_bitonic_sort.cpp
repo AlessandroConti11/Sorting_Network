@@ -5,6 +5,7 @@
  * Adapted bitonic sort.
  *
  * @details work even if the array.size() is not divisible by 2^k.
+ *
  * @param array
  */
 void Adapted_Bitonic_Sort::adapted_bitonic_sort(vector<int> &array) {
