@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.22.1)
 project(sorting_network)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -22,4 +22,7 @@ add_executable(sorting_network main.cpp
         3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h
         2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.cpp
         2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h
-        2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h)
+        2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h
+        shearsort/shearsort.cpp
+        shearsort/shearsort.h
+        shearsort/shearsort.cpp)

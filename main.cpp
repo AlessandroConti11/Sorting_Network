@@ -1,6 +1,5 @@
 #include <iostream>
 
-
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "odd-even_mergesort/odd_even_mergesort.h"
 #include "bitonic_sort/bitonic_sort.h"
@@ -10,6 +9,7 @@
 #include "rotatesort/rotatesort.h"
 #include "3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h"
 #include "2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h"
+#include "shearsort/shearsort.h"
 
 using namespace std;
 
@@ -85,15 +85,16 @@ void print_matrix(const vector<vector<int>>& matrix) {
 
 int main() {
     cout << "Which sorting network algorithm do you want to test?\n"
-            "1. Odd-even transposition sort\n"
-            "2. Odd-even mergesort\n"
-            "3. Bitonic sort\n"
-            "4. Bitonic sort for arbitrary n\n"
-            "5. LS3 sort\n"
-            "6. 4-way mergesort\n"
-            "7. Rotatesort\n"
-            "8. 3n-sort of Schnorr and Shamir\n"
-            "9. 2D odd-even transposition sort\n\n"
+            " 1. Odd-even transposition sort\n"
+            " 2. Odd-even mergesort\n"
+            " 3. Bitonic sort\n"
+            " 4. Bitonic sort for arbitrary n\n"
+            " 5. LS3 sort\n"
+            " 6. 4-way mergesort\n"
+            " 7. Rotatesort\n"
+            " 8. 3n-sort of Schnorr and Shamir\n"
+            " 9. 2D odd-even transposition sort\n"
+            "10. Shearsort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -185,6 +186,15 @@ int main() {
             cout << "\nAfter sorting it:\n";
             print_matrix(matrix);
             break;
+        case 10:
+            matrix = create_matrix();
+
+            cout << "Before sorting it:\n";
+            print_matrix(matrix);
+            Shearsort::shearSort(matrix);
+            cout << "\nAfter sorting it:\n";
+            print_matrix(matrix);
+        break;
         default:
             break;
     }
