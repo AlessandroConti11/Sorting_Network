@@ -6,7 +6,7 @@ Author: Alessandro Conti - [AlessandroConti11](https://github.com/AlessandroCont
 License: [MIT license](LICENSE).
 
 
-Tags: `#2D-array`, `#2D_odd-even_transposition_sort`, `#3n_sort`, `#3n_sort_of_Schnorr_and_Shamir`, `#4-way_mergesort`, `#adapted_bitonic_sort`, `#array`, `#bitonic_sort`, `#LS3_sort`, `#odd-even_mergesort`, `#odd-even_transposition_sort`, `#rotatesort`, `#shearsort`, `#sorting`, `#sorting_network`.
+Tags: `#2D-array`, `#2D_odd-even_transposition_sort`, `#3n_sort`, `#3n_sort_of_Schnorr_and_Shamir`, `#4-way_mergesort`, `#adapted_bitonic_sort`, `#array`, `#bitonic_sort`, `#c++`, `#cpp`, `#LS3_sort`, `#odd-even_mergesort`, `#odd-even_transposition_sort`, `#rotatesort`, `#shearsort`, `#sorting`, `#sorting_network`.
 
 
 ## Specification
