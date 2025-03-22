@@ -19,4 +19,7 @@ add_executable(sorting_network main.cpp
         rotatesort/rotatesort.cpp
         rotatesort/rotatesort.h
         3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.cpp
-        3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h)
+        3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h
+        2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.cpp
+        2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h
+        2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h)

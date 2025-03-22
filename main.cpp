@@ -1,5 +1,4 @@
 #include <iostream>
-#include <ranges>
 
 
 #include "odd-even_transposition_sort/odd_even_transposition_sort.h"
@@ -10,6 +9,7 @@
 #include "4-way_mergesort/four_way_mergesort.h"
 #include "rotatesort/rotatesort.h"
 #include "3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h"
+#include "2D_odd-even_transposition_sort/two_d_odd_even_transposition_sort.h"
 
 using namespace std;
 
@@ -41,7 +41,7 @@ vector<int> create_vector() {
  * @param vector the vector to print.
  */
 void print_vector(vector<int>& vector) {
-    ranges::for_each(vector, [](int num) { cout << num << " "; });
+    ranges::for_each(vector, [](const int num) { cout << num << " "; });
 }
 
 
@@ -75,7 +75,7 @@ vector<vector<int>> create_matrix() {
  */
 void print_matrix(const vector<vector<int>>& matrix) {
     for (const auto& row : matrix) {
-        for (int num : row) {
+        for (const int num : row) {
             cout << num << " ";
         }
         cout << endl;
@@ -92,7 +92,8 @@ int main() {
             "5. LS3 sort\n"
             "6. 4-way mergesort\n"
             "7. Rotatesort\n"
-            "8. 3n-sort of Schnorr and Shamir\n\n"
+            "8. 3n-sort of Schnorr and Shamir\n"
+            "9. 2D odd-even transposition sort\n\n"
             "Insert your choice: ";
 
     int choice = 0;
@@ -167,6 +168,15 @@ int main() {
             print_matrix(matrix);
             break;
         case 8:
+            matrix = create_matrix();
+
+            cout << "Before sorting it:\n";
+            print_matrix(matrix);
+            Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(matrix);
+            cout << "\nAfter sorting it:\n";
+            print_matrix(matrix);
+            break;
+        case 9:
             matrix = create_matrix();
 
             cout << "Before sorting it:\n";
