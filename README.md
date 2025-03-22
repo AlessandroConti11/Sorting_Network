@@ -6,7 +6,7 @@ Author: Alessandro Conti - [AlessandroConti11](https://github.com/AlessandroCont
 License: [MIT license](LICENSE).
 
 
-Tags: .
+Tags: `#2D-array`, `#2D_odd-even_transposition_sort`, `#3n_sort`, `#3n_sort_of_Schnorr_and_Shamir`, `#4-way_mergesort`, `#adapted_bitonic_sort`, `#array`, `#bitonic_sort`, `#LS3_sort`, `#odd-even_mergesort`, `#odd-even_transposition_sort`, `#rotatesort`, `#shearsort`, `#sorting`, `#sorting_network`.
 
 
 ## Specification
@@ -32,7 +32,75 @@ The implemented sorting networks are:
 
 ## How to run
 
+The steps below refer to a Unix environment, for other environments the commands may change.
 
+0. install gcc
+    ```bash
+    sudo apt-get install gcc 
+    ```
+1. compile each source file into an object file
+    ```bash
+    g++ -std=c++20 -Wall -Werror -Wextra -O2 -c FILE.cpp -o FILE.o
+    ```
+2. link all object files into an executable
+    ```bash
+    g++ -std=c++20 -Wall -Werror -Wextra -O2 main.o \
+    odd-even_transposition_sort/odd-even_transposition_sort.o \
+    odd-even_mergesort/odd-even_mergesort.o \
+    bitonic_sort/bitonic_sort.o \
+    adapted_bitonic_sort/adapted_bitonic_sort.o \
+    ls3_sort/ls3_sort.o \
+    4-way_mergesort/4-way_mergesort.o \
+    rotatesort/rotatesort.o \
+    3n_sort_Schnorr_and_Shamir/3n_sort_Schnorr_and_Shamir.o \
+    2D_odd-even_transposition_sort/2D_odd-even_transposition_sort.o \
+    shearsort/shearsort.o \
+    -o EXECUTABLE
+    ```
+3. run the executable
+    ```bash
+    ./EXECUTABLE
+    ```
+
+<br>
+
+The Makefile in the repository can also be used to compile the code.
+- this option allows you to compile with the following tags: *-std=c++20 -Wall -Werror -Wextra -O2*
+    ```bash
+    make
+    ```
+- if you want to specify different tags, you can set them
+   ```bash
+   make compile CXXFLAGS=YOUR_FLAGS
+   ```
+- if you want to remove all .o files and the final executable
+    ```bash
+    make clean
+    ```
+
+<br>
+
+The CMakeLists.txt in the repository can also be used to compile the code.
+0. install cmake
+    ```bash
+    sudo apt-get install cmake
+    ```
+1. create the build folder
+    ```bash
+    mkdir build && cd build
+    ```
+2. generate compilation files
+    ```bash
+    cmake ..
+    ```
+3. build the project
+    ```bash
+    cmake --build .
+    ```
+4. run the executable
+    ```bash
+    ./sorting_network
+    ```
 
 
 ## Contribute
