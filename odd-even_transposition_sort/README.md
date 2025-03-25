@@ -10,4 +10,4 @@ The odd-even transposition sort is an elementary sorting network biased on the b
 
 ## Computational Cost
 
-The computational cost of odd-even transposition sort is $\mathcal{O}{\left(n\right)}$, more precisely requires $n \frac{n - 1}{2}$ comparators.
+The computational cost of odd-even transposition sort is $\mathcal{O}{\left(n^2\right)}$, more precisely requires $n \frac{n - 1}{2}$ comparators.
