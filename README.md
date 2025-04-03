@@ -81,6 +81,7 @@ The Makefile in the repository can also be used to compile the code.
 <br>
 
 The CMakeLists.txt in the repository can also be used to compile the code.
+
 0. install cmake
     ```bash
     sudo apt-get install cmake
