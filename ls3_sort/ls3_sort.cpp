@@ -84,6 +84,8 @@ void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
 void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
     vector<int> flattened;
 
+
+    //flatter the matrix
     for (size_t i = 0; i < matrix.size(); i++) {
         if (i % 2 == 0) {
             copy(matrix[i].begin(), matrix[i].end(), back_inserter(flattened));
@@ -93,7 +95,9 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
         }
     }
 
+    //oets step
     Odd_Even_Transposition_Sort::odd_even_transposition_sort(flattened);
+
 
     int index = 0;
 
@@ -119,6 +123,7 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
  * @param n the matrix size.
  */
 void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix, const int n) {
+    //double column
     for (int j = 0; j < n; j += 2) {
         vector<int> column;
 
@@ -128,7 +133,9 @@ void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix
                 column.push_back(matrix[i][j + 1]);
             }
         }
+        //column_a || column_b
 
+        //sort the column
         Odd_Even_Transposition_Sort::odd_even_transposition_sort(column);
 
         int index = 0;
