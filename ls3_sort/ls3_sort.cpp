@@ -38,6 +38,7 @@ void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, const int n) {
         sort_ls3(sub_matrix_3, half);
         sort_ls3(sub_matrix_4, half);
 
+        //insert submatrices back into main matrix
         insertSubMatrix(matrix, sub_matrix_1, 0, 0);
         insertSubMatrix(matrix, sub_matrix_2, 0, half);
         insertSubMatrix(matrix, sub_matrix_3, half, 0);
