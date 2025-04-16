@@ -14,19 +14,19 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
     const int n = static_cast<int>(matrix.size());
 
     //balance each vertical slice
-    balance(matrix);
+    balance(matrix, false);
 
     //unblock
     unblock(matrix);
 
     //balance each horizontal slice - transpose, balance, transpose back
-    vector<vector<int>> transposed(n, vector<int>(n));
+    vector transposed(n, vector<int>(n));
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             transposed[j][i] = matrix[i][j];
         }
     }
-    balance(transposed);
+    balance(transposed, true);
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
             matrix[i][j] = transposed[j][i];
@@ -51,12 +51,42 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
 /**
  * The balance operation of rotatesort.
  *
- * @param vertical_slice the vertical slice.
+ * @param matrix the matrix.
+ * @param horizontal_slice the balance operation is on the horizontal slices.
  */
-void Rotatesort::balance(vector<vector<int>> &vertical_slice) {
-    sort_columns(vertical_slice);
-    rotate_rows(vertical_slice);
-    sort_columns(vertical_slice);
+void Rotatesort::balance(vector<vector<int>> &matrix, bool horizontal_slice) {
+    const int n = static_cast<int>(matrix.size());
+    const int sqrt_n = static_cast<int>(sqrt(n));
+
+
+    for (int slice_i = 0; slice_i < sqrt_n; slice_i++) {
+        ///The slice.
+        vector slice(n, vector<int>(sqrt_n));
+
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < sqrt_n; ++j) {
+                slice[i][j] = horizontal_slice ?
+                   matrix[slice_i * sqrt_n + j][i] : //{sqrt(n) x n}
+                   matrix[i][slice_i * sqrt_n + j]; //{n x sqrt(n)}
+            }
+        }
+
+        sort_columns(slice);
+        rotate_rows_balance(slice);
+        sort_columns(slice);
+
+        // insert slice back
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < sqrt_n; ++j) {
+                if (horizontal_slice) {
+                    matrix[slice_i * sqrt_n + j][i] = slice[i][j];
+                }
+                else {
+                    matrix[i][slice_i * sqrt_n + j] = slice[i][j];
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -65,7 +95,7 @@ void Rotatesort::balance(vector<vector<int>> &vertical_slice) {
  * @param matrix the unsorted matrix.
  */
 void Rotatesort::unblock(vector<vector<int>> &matrix) {
-    rotate_rows(matrix);
+    rotate_rows_unblock(matrix);
     sort_columns(matrix);
 }
 
@@ -115,12 +145,37 @@ void Rotatesort::sort_columns(vector<vector<int>> &matrix) {
 }
 
 /**
- * Function that rotate the rows.
+ * Function used in balance operation that rotates the rows.
+ *
+ * @details rotate row i by {i % sqrt(n)} positions.
  *
  * @param matrix the unsorted matrix.
  */
-void Rotatesort::rotate_rows(vector<vector<int>> &matrix) {
-    for (auto &row : matrix) {
-        rotate(row.rbegin(), row.rbegin() + 1, row.rend());
+void Rotatesort::rotate_rows_balance(vector<vector<int>> &matrix) {
+    const int n = static_cast<int>(matrix.size());
+    const int sqrt_n = static_cast<int>(sqrt(n));
+
+
+    for (int i = 0; i < n; ++i) {
+        //rotate row i by (i % sqrt(n)) positions
+        rotate(matrix[i].begin(), matrix[i].begin() + (i % sqrt_n), matrix[i].end());
+    }
+}
+
+/**
+ * Function used in unblock operation that rotates the rows.
+ *
+ * @details rotate row i by {(i * sqrt(n)) % n} positions.
+ *
+ * @param matrix the unsorted matrix.
+ */
+void Rotatesort::rotate_rows_unblock(vector<vector<int>> &matrix) {
+    const int n = static_cast<int>(matrix.size());
+    const int sqrt_n = static_cast<int>(sqrt(n));
+
+
+    for (int i = 0; i < n; ++i) {
+        //rotate row i by (i * sqrt(n)) % n positions (used in unblock)
+        rotate(matrix[i].begin(), matrix[i].begin() + ((i * sqrt_n) % n), matrix[i].end());
     }
 }
