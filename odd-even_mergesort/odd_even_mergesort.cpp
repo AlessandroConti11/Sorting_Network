@@ -29,10 +29,14 @@ void Odd_Even_Mergesort::mergesort_odd_even(vector<int>& array, const int start_
         #pragma omp parallel sections
         {
             #pragma omp section
-            mergesort_odd_even(array, start_position, midpoint);
+            {
+                mergesort_odd_even(array, start_position, midpoint);
+            }
 
             #pragma omp section
-            mergesort_odd_even(array, start_position + midpoint, midpoint);
+            {
+                mergesort_odd_even(array, start_position + midpoint, midpoint);
+            }
         }
 
         merge_odd_even(array, start_position, finish_position, 1);
@@ -52,10 +56,14 @@ void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, const int start_posi
         #pragma omp parallel sections
         {
             #pragma omp section
-            merge_odd_even(array, start_position, finish_position, m);
+            {
+                merge_odd_even(array, start_position, finish_position, m);
+            }
 
             #pragma omp section
-            merge_odd_even(array, start_position + distance_to_compare, finish_position, m);
+            {
+                merge_odd_even(array, start_position + distance_to_compare, finish_position, m);
+            }
         }
 
         #pragma omp parallel for
