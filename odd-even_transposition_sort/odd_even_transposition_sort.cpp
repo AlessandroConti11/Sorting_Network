@@ -21,10 +21,12 @@ void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsor
         bool odd_phase_sorted = true;
 
         #pragma omp parallel for reduction(&:odd_phase_sorted)
-        for (int i = 1; i < array_size - 1; i += 2) {
-            if (unsorted_array[i] > unsorted_array[i + 1]) {
-                std::swap(unsorted_array[i], unsorted_array[i + 1]);
-                odd_phase_sorted = false;
+        {
+            for (int i = 1; i < array_size - 1; i += 2) {
+                if (unsorted_array[i] > unsorted_array[i + 1]) {
+                    std::swap(unsorted_array[i], unsorted_array[i + 1]);
+                    odd_phase_sorted = false;
+                }
             }
         }
 
@@ -33,10 +35,12 @@ void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsor
         bool even_phase_sorted = true;
 
         #pragma omp parallel for reduction(&:even_phase_sorted)
-        for (int i = 0; i < array_size - 1; i += 2) {
-            if (unsorted_array[i] > unsorted_array[i + 1]) {
-                std::swap(unsorted_array[i], unsorted_array[i + 1]);
-                even_phase_sorted = false;
+        {
+            for (int i = 0; i < array_size - 1; i += 2) {
+                if (unsorted_array[i] > unsorted_array[i + 1]) {
+                    std::swap(unsorted_array[i], unsorted_array[i + 1]);
+                    even_phase_sorted = false;
+                }
             }
         }
 
