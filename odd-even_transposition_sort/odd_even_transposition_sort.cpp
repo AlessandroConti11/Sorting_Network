@@ -1,5 +1,6 @@
 #include "odd_even_transposition_sort.h"
 
+
 /**
  * Odd-even transposition sort.
  *
@@ -15,22 +16,31 @@ void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsor
 
 
     while (!is_sorted) {
-        is_sorted = true;
-
         //odd phase
+        ///The local flag for odd phase.
+        bool odd_phase_sorted = true;
+
+        #pragma omp parallel for reduction(&:odd_phase_sorted)
         for (int i = 1; i < array_size - 1; i += 2) {
             if (unsorted_array[i] > unsorted_array[i + 1]) {
-                swap(unsorted_array[i], unsorted_array[i + 1]);
-                is_sorted = false;
+                std::swap(unsorted_array[i], unsorted_array[i + 1]);
+                odd_phase_sorted = false;
             }
         }
 
         //even phase
+        ///The local flag for even phase.
+        bool even_phase_sorted = true;
+
+        #pragma omp parallel for reduction(&:even_phase_sorted)
         for (int i = 0; i < array_size - 1; i += 2) {
             if (unsorted_array[i] > unsorted_array[i + 1]) {
-                swap(unsorted_array[i], unsorted_array[i + 1]);
-                is_sorted = false;
+                std::swap(unsorted_array[i], unsorted_array[i + 1]);
+                even_phase_sorted = false;
             }
         }
+
+        #pragma omp barrier
+        is_sorted = odd_phase_sorted && even_phase_sorted;
     }
 }
