@@ -5,6 +5,7 @@
 #include <vector>
 #include <cmath>
 #include <algorithm>
+#include <omp.h>
 
 using namespace std;
 
@@ -18,7 +19,6 @@ private:
 
     static void sort_columns(vector<vector<int>>& matrix);
 };
-
 
 
 #endif //SHEARSORT_H

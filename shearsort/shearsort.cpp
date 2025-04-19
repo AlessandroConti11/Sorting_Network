@@ -11,14 +11,20 @@
  * @param matrix the unsorted matrix.
  */
 void Shearsort::shearSort(vector<vector<int>>& matrix) {
+    ///The matrix size.
     const int matrix_size = static_cast<int>(matrix.size());
+    ///The logarithm of the matrix size.
     const int logn = static_cast<int>(log2(matrix_size)) + 1;
 
+
     for (int i = 0; i < logn; i++) {
+        //sort rows
         sort_rows(matrix);
+        //sort columns
         sort_columns(matrix);
     }
 
+    //last sort rows
     sort_rows(matrix);
 }
 
@@ -31,14 +37,17 @@ void Shearsort::shearSort(vector<vector<int>>& matrix) {
  * @param matrix the unsorted matrix.
  */
 void Shearsort::sort_rows(vector<vector<int>>& matrix) {
+    ///The matrix size.
     const int matrix_size = static_cast<int>(matrix.size());
 
-    for (int i = 0; i < matrix_size; i++) {
-        if (i % 2 == 0) {
-            sort(matrix[i].begin(), matrix[i].end());
-        }
-        else {
-            sort(matrix[i].rbegin(), matrix[i].rend());
+    #pragma omp parallel for
+    {
+        for (int i = 0; i < matrix_size; i++) {
+            if (i % 2 == 0) { //even rows in ascending
+                sort(matrix[i].begin(), matrix[i].end());
+            } else { //odd rows in descending
+                sort(matrix[i].rbegin(), matrix[i].rend());
+            }
         }
     }
 }
@@ -49,19 +58,25 @@ void Shearsort::sort_rows(vector<vector<int>>& matrix) {
  * @param matrix the unsorted matrix.
  */
 void Shearsort::sort_columns(vector<vector<int>>& matrix) {
+    ///The matrix size.
     const int matrix_size = static_cast<int>(matrix.size());
 
-    for (int j = 0; j < matrix_size; j++) {
-        vector<int> column(matrix_size);
 
-        for (int i = 0; i < matrix_size; i++) {
-            column[i] = matrix[i][j];
-        }
+    #pragma omp parallel for
+    {
+        for (int j = 0; j < matrix_size; j++) {
+            ///The column.
+            vector<int> column(matrix_size);
 
-        sort(column.begin(), column.end());
+            for (int i = 0; i < matrix_size; i++) {
+                column[i] = matrix[i][j];
+            }
 
-        for (int i = 0; i < matrix_size; i++) {
-            matrix[i][j] = column[i];
+            sort(column.begin(), column.end());
+
+            for (int i = 0; i < matrix_size; i++) {
+                matrix[i][j] = column[i];
+            }
         }
     }
 }
