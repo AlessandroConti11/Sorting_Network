@@ -12,8 +12,8 @@ add_executable(sorting_network main.cpp
         bitonic_sort/bitonic_sort.h
         adapted_bitonic_sort/adapted_bitonic_sort.cpp
         adapted_bitonic_sort/adapted_bitonic_sort.h
-        ls3_sort/ls3_sort.cpp
-        ls3_sort/ls3_sort.h
+        LS3_sort/ls3_sort.cpp
+        LS3_sort/ls3_sort.h
         4-way_mergesort/four_way_mergesort.cpp
         4-way_mergesort/four_way_mergesort.h
         rotatesort/rotatesort.cpp
