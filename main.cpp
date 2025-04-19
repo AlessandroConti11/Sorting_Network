@@ -23,11 +23,15 @@ vector<int> create_vector() {
     cout << "We create the array to be reordered.\n"
             "Insert one number at a time (to finish -1): ";
 
+    ///The number inserted by the user.
     int number = -1;
+    ///The array.
     vector<int> array = {};
+
 
     while (true) {
         cin >> number;
+
         if (number == -1) {
             return array;
         }
@@ -51,11 +55,16 @@ void print_vector(vector<int>& vector) {
  * @return a matrix.
  */
 vector<vector<int>> create_matrix() {
+    ///The matrix size.
     int n;
+
+
     cout << "Insert the square matrix size: ";
     cin >> n;
 
+    ///The matrix.
     vector<vector<int>> matrix(n, vector<int>(n));
+
 
     cout << "Insert the matrix elements: \n";
     for (int i = 0; i < n; i++) {
@@ -97,12 +106,17 @@ int main() {
             "10. Shearsort\n\n"
             "Insert your choice: ";
 
+    ///The user choice.
     int choice = 0;
+
 
     cin >> choice;
 
+    ///The array.
     vector<int> array = {};
+    ///The bidimensional array.
     vector<vector<int>> matrix = {};
+
 
     switch (choice) {
         case 1:
