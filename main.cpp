@@ -4,7 +4,7 @@
 #include "odd-even_mergesort/odd_even_mergesort.h"
 #include "bitonic_sort/bitonic_sort.h"
 #include "adapted_bitonic_sort/adapted_bitonic_sort.h"
-#include "ls3_sort/ls3_sort.h"
+#include "LS3_sort/ls3_sort.h"
 #include "4-way_mergesort/four_way_mergesort.h"
 #include "rotatesort/rotatesort.h"
 #include "3n_sort_Schnorr_and_Shamir/three_n_sort_Schnorr_and_Shamir.h"

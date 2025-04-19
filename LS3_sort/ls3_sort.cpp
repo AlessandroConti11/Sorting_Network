@@ -23,22 +23,45 @@ void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
  */
 void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, const int n) {
     if(n > 1) {
+        ///The half size.
         const int half = n / 2;
 
         //define the 4 {n/2 X n/2}-subarray
+        ///Sub-matrix 1.
         vector<vector<int>> sub_matrix_1 = extract_submatrix(matrix, 0, 0, half);
+        ///Sub-matrix 2.
         vector<vector<int>> sub_matrix_2 = extract_submatrix(matrix, 0, half, half);
+        ///Sub-matrix 3.
         vector<vector<int>> sub_matrix_3 = extract_submatrix(matrix, half, 0, half);
+        ///Sub-matrix 4.
         vector<vector<int>> sub_matrix_4 = extract_submatrix(matrix, half, half, half);
 
 
-        //apply LS3 sort recursively to the 4 {n/2 X n/2}-subarray
-        sort_ls3(sub_matrix_1, half);
-        sort_ls3(sub_matrix_2, half);
-        sort_ls3(sub_matrix_3, half);
-        sort_ls3(sub_matrix_4, half);
+        //apply LS3 sort recursively to the 4 {n/2 X n/2}-subarray in parallel
+        #pragma omp parallel sections
+        {
+            #pragma omp section
+            {
+                sort_ls3(sub_matrix_1, half);
+            }
 
-        //insert submatrices back into main matrix
+            #pragma omp section
+            {
+                sort_ls3(sub_matrix_2, half);
+            }
+
+            #pragma omp section
+            {
+                sort_ls3(sub_matrix_3, half);
+            }
+
+            #pragma omp section
+            {
+                sort_ls3(sub_matrix_4, half);
+            }
+        }
+
+        //insert submatrices back into the main matrix
         insertSubMatrix(matrix, sub_matrix_1, 0, 0);
         insertSubMatrix(matrix, sub_matrix_2, 0, half);
         insertSubMatrix(matrix, sub_matrix_3, half, 0);
@@ -69,9 +92,12 @@ void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, const int k) {
  * @param n the matrix size.
  */
 void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
-    for (int i = 0; i < n; i++) {
-        if (i % 2 == 1) {
-            reverse(matrix[i].begin(), matrix[i].end());
+    #pragma omp parallel for
+    {
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 1) {
+                reverse(matrix[i].begin(), matrix[i].end());
+            }
         }
     }
 }
@@ -83,34 +109,47 @@ void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
  * @param n the matrix size.
  */
 void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
+    ///The flattened matrix.
     vector<int> flattened;
 
 
-    //flatter the matrix
-    for (size_t i = 0; i < matrix.size(); i++) {
-        if (i % 2 == 0) {
-            copy(matrix[i].begin(), matrix[i].end(), back_inserter(flattened));
-        }
-        else {
-            copy(matrix[i].rbegin(), matrix[i].rend(), back_inserter(flattened));
+    //flatten the matrix in parallel
+    #pragma omp parallel for
+    {
+        for (size_t i = 0; i < matrix.size(); i++) {
+            if (i % 2 == 0) {
+                #pragma omp critical
+                {
+                    copy(matrix[i].begin(), matrix[i].end(), back_inserter(flattened));
+                }
+            }
+            else {
+                #pragma omp critical
+                {
+                    copy(matrix[i].rbegin(), matrix[i].rend(), back_inserter(flattened));
+                }
+            }
         }
     }
 
-    //oets step
+    // Oets step
     Odd_Even_Transposition_Sort::odd_even_transposition_sort(flattened);
 
+    #pragma omp parallel for
+    {
+        ///The index for the flattened array.
+        int index = 0;
 
-    int index = 0;
-
-    for (int i = 0; i < n; i++) {
-        if (i % 2 == 0) {
-            for (int j = 0; j < n; j++) {
-                matrix[i][j] = flattened[index++];
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) {
+                for (int j = 0; j < n; j++) {
+                    matrix[i][j] = flattened[index++];
+                }
             }
-        }
-        else {
-            for (int j = n - 1; j >= 0; j--) {
-                matrix[i][j] = flattened[index++];
+            else {
+                for (int j = n - 1; j >= 0; j--) {
+                    matrix[i][j] = flattened[index++];
+                }
             }
         }
     }
@@ -124,27 +163,32 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
  * @param n the matrix size.
  */
 void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix, const int n) {
-    //double column
-    for (int j = 0; j < n; j += 2) {
-        vector<int> column;
+    //double column sorting in parallel
+    #pragma omp parallel for
+    {
+        for (int j = 0; j < n; j += 2) {
+            ///The column.
+            vector<int> column;
 
-        for (int i = 0; i < n; i++) {
-            column.push_back(matrix[i][j]);
-            if (j + 1 < n) {
-                column.push_back(matrix[i][j + 1]);
+            for (int i = 0; i < n; i++) {
+                column.push_back(matrix[i][j]);
+                if (j + 1 < n) {
+                    column.push_back(matrix[i][j + 1]);
+                }
             }
-        }
-        //column_a || column_b
+            //column_a || column_b
 
-        //sort the column
-        Odd_Even_Transposition_Sort::odd_even_transposition_sort(column);
+            //sort the column
+            Odd_Even_Transposition_Sort::odd_even_transposition_sort(column);
 
-        int index = 0;
+            ///The column index.
+            int index = 0;
 
-        for (int i = 0; i < n; i++) {
-            matrix[i][j] = column[index++];
-            if (j + 1 < n) {
-                matrix[i][j + 1] = column[index++];
+            for (int i = 0; i < n; i++) {
+                matrix[i][j] = column[index++];
+                if (j + 1 < n) {
+                    matrix[i][j + 1] = column[index++];
+                }
             }
         }
     }
@@ -160,10 +204,15 @@ void LS3_Sort::sort_double_column_in_snake_direction(vector<vector<int>>& matrix
  * @return the submatrix.
  */
 vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matrix, const int row, const int column, const int submatrix_size) {
+    ///The sub-matrix.
     vector sub_matrix(submatrix_size, vector<int>(submatrix_size));
 
-    for (int i = 0; i < submatrix_size; i++) {
-        copy(matrix[row + i].begin() + column, matrix[row + i].begin() + column + submatrix_size, sub_matrix[i].begin());
+
+    #pragma omp parallel for
+    {
+        for (int i = 0; i < submatrix_size; i++) {
+            copy(matrix[row + i].begin() + column, matrix[row + i].begin() + column + submatrix_size, sub_matrix[i].begin());
+        }
     }
 
     return sub_matrix;
@@ -178,9 +227,14 @@ vector<vector<int>> LS3_Sort::extract_submatrix(const vector<vector<int>>& matri
  * @param column the column.
  */
 void LS3_Sort::insertSubMatrix(vector<vector<int>>& matrix, const vector<vector<int>>& sub_matrix, const int row, const int column) {
+    ///The sub-matrix size.
     const int submatrix_size = static_cast<int>(sub_matrix.size());
 
-    for (int i = 0; i < submatrix_size; i++) {
-        copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);
+
+    #pragma omp parallel for
+    {
+        for (int i = 0; i < submatrix_size; i++) {
+            copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);
+        }
     }
 }

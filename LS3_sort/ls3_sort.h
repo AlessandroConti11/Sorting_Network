@@ -3,8 +3,10 @@
 
 
 #include <vector>
-#include <algorithm>
+#include <omp.h>
+
 #include "../odd-even_transposition_sort/odd_even_transposition_sort.h"
+
 using namespace std;
 
 
