@@ -40,34 +40,37 @@ void Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(vector<vector<int>>&
  * @return true if the column is sorted, false otherwise.
  */
 bool Two_D_Odd_Even_Transposition_Sort::sort_row_oets_step(vector<vector<int>> &matrix, bool is_odd) {
-    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
-    ///The rows is sorted or not.
     bool is_sorted_rows = false;
 
+    #pragma omp parallel for shared(matrix) reduction(|:is_sorted_rows)
+    {
+        for (int i = 0; i < n; ++i) {
+            ///The sorting direction of the rows.
+            bool direction = (i % 2 == 0);
 
-    for (int i = 0; i < n; ++i) {
-        ///The sorting direction of the rows.
-        bool direction = (i % 2 == 0);
+            for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
+                ///The index of the first value to be swapped.
+                int a = j;
+                ///The index of the second value to be swapped.
+                int b = j + 1;
 
-        for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
-            ///The index of the first value to be swapped.
-            int a = j;
-            ///The index of the second value to be swapped.
-            int b = j + 1;
+                if (!direction) swap(a, b);
 
-            if (!direction) {
-                swap(a, b);
-            }
-            if (matrix[i][a] > matrix[i][b]) {
-                swap(matrix[i][a], matrix[i][b]);
-                is_sorted_rows = true;
+                #pragma omp critical
+                {
+                    if (matrix[i][a] > matrix[i][b]) {
+                        swap(matrix[i][a], matrix[i][b]);
+                        is_sorted_rows = true;
+                    }
+                }
             }
         }
     }
 
     return is_sorted_rows;
 }
+
 
 /**
  * Function that sorts a column.
@@ -82,15 +85,22 @@ bool Two_D_Odd_Even_Transposition_Sort::sort_column_oets_step(vector<vector<int>
     ///The columns is sorted or not.
     bool is_sorted_columns = false;
 
+    #pragma omp parallel for shared(matrix) reduction(|:is_sorted_columns)
+    {
+        for (int i = 0; i < n; ++i) {
+            for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
 
-    for (int i = 0; i < n; ++i) {
-        for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
-            if (matrix[j][i] > matrix[j + 1][i]) {
-                swap(matrix[j][i], matrix[j + 1][i]);
-                is_sorted_columns = true;
+                #pragma omp critical
+                {
+                    if (matrix[j][i] > matrix[j + 1][i]) {
+                        swap(matrix[j][i], matrix[j + 1][i]);
+                        is_sorted_columns = true;
+                    }
+                }
             }
         }
     }
 
     return is_sorted_columns;
 }
+
