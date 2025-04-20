@@ -101,8 +101,8 @@ int main() {
             " 5. LS3 sort\n"
             " 6. 4-way mergesort\n"
             " 7. Rotatesort\n"
-            " 8. 3n-sort of Schnorr and Shamir\n"
-            " 9. 2D odd-even transposition sort\n"
+            " 8. 2D odd-even transposition sort\n"
+            " 9. 3n-sort of Schnorr and Shamir\n"
             "10. Shearsort\n\n"
             "Insert your choice: ";
 
