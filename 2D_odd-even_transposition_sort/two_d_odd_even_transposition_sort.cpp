@@ -11,21 +11,21 @@
  * @param matrix the unsorted matrix.
  */
 void Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(vector<vector<int>>& matrix) {
-    const int matrix_size = static_cast<int>(matrix.size());
-    bool is_sorted = false;
+    ///The matrix is sorted or not.
+    bool is_sorted = true;
 
-    while (!is_sorted) {
-        is_sorted = true;
 
-        //apply an oets step to the rows
-        for (int i = 0; i < matrix_size; ++i) {
-            is_sorted = sort_row_oets_step(matrix[i], i % 2 == 0);
-        }
+    while (is_sorted) {
+        is_sorted = false;
 
-        //apply an oets step to the columns
-        for (int j = 0; j < matrix_size; ++j) {
-            is_sorted = sort_column_oets_step(matrix, j);
-        }
+        //odd oets step to the rows
+        is_sorted |= sort_row_oets_step(matrix, true);
+        //even oets step to the rows
+        is_sorted |= sort_row_oets_step(matrix, false);
+        //odd oets step to the columns
+        is_sorted |= sort_column_oets_step(matrix, true);
+        //even oets step to the columns
+        is_sorted |= sort_column_oets_step(matrix, false);
     }
 }
 
@@ -35,47 +35,62 @@ void Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(vector<vector<int>>&
  *
  * @details sorting direction: even rows from left to right and odd rows from right to left.
  *
- * @param array the unsorted row.
- * @param direction the sorting direction of the rows.
+ * @param matrix the unsorted matrix.
+ * @param is_odd the oets step on the rows is either odd or even, true if is odd.
  * @return true if the column is sorted, false otherwise.
  */
-bool Two_D_Odd_Even_Transposition_Sort::sort_row_oets_step(vector<int>& array, const bool direction) {
-    const int array_size = static_cast<int>(array.size());
-    bool is_sorted = true;
+bool Two_D_Odd_Even_Transposition_Sort::sort_row_oets_step(vector<vector<int>> &matrix, bool is_odd) {
+    ///The matrix size.
+    const int n = static_cast<int>(matrix.size());
+    ///The rows is sorted or not.
+    bool is_sorted_rows = false;
 
-    for (int i = 0; i < array_size; ++i) {
-        for (int j = (i % 2 == 0) ? 0 : 1; j < array_size - 1; j += 2) {
-            
-            if ((direction && array[j] > array[j + 1]) || (!direction && array[j] < array[j + 1])) {
-                swap(array[j], array[j + 1]);
-                is_sorted = false;
+
+    for (int i = 0; i < n; ++i) {
+        ///The sorting direction of the rows.
+        bool direction = (i % 2 == 0);
+
+        for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
+            ///The index of the first value to be swapped.
+            int a = j;
+            ///The index of the second value to be swapped.
+            int b = j + 1;
+
+            if (!direction) {
+                swap(a, b);
+            }
+            if (matrix[i][a] > matrix[i][b]) {
+                swap(matrix[i][a], matrix[i][b]);
+                is_sorted_rows = true;
             }
         }
     }
 
-    return is_sorted;
+    return is_sorted_rows;
 }
 
 /**
  * Function that sorts a column.
  *
  * @param matrix the unsorted matrix.
- * @param column_to_sort the column to sort.
+ * @param is_odd the oets step on the rows is either odd or even, true if is odd.
  * @return true if the column is sorted, false otherwise.
  */
-bool Two_D_Odd_Even_Transposition_Sort::sort_column_oets_step(vector<vector<int>>& matrix, const int column_to_sort) {
-    const int matrix_size = static_cast<int>(matrix.size());
-    bool is_sorted = true;
+bool Two_D_Odd_Even_Transposition_Sort::sort_column_oets_step(vector<vector<int>> &matrix, bool is_odd) {
+    ///The matrix size.
+    const int n = static_cast<int>(matrix.size());
+    ///The columns is sorted or not.
+    bool is_sorted_columns = false;
 
-    for (int i = 0; i < matrix_size; ++i) {
-        for (int j = (i % 2 == 0) ? 0 : 1; j < (matrix_size - 1); j += 2) {
 
-            if (matrix[j][column_to_sort] > matrix[j + 1][column_to_sort]) {
-                swap(matrix[j][column_to_sort], matrix[j + 1][column_to_sort]);
-                is_sorted = false;
+    for (int i = 0; i < n; ++i) {
+        for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
+            if (matrix[j][i] > matrix[j + 1][i]) {
+                swap(matrix[j][i], matrix[j + 1][i]);
+                is_sorted_columns = true;
             }
         }
     }
 
-    return is_sorted;
+    return is_sorted_columns;
 }

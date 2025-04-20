@@ -3,6 +3,7 @@
 
 
 #include <vector>
+
 using namespace std;
 
 
@@ -11,8 +12,8 @@ public:
     static void two_d_odd_even_sort(vector<vector<int>>& matrix);
 
 private:
-    static bool sort_row_oets_step(vector<int>& array, bool direction);
-    static bool sort_column_oets_step(vector<vector<int>>& matrix, int column_to_sort);
+    static bool sort_row_oets_step(vector<vector<int>>& matrix, bool is_odd);
+    static bool sort_column_oets_step(vector<vector<int>>& matrix, bool is_odd);
 };
 
 
