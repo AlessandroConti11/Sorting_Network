@@ -48,15 +48,12 @@ void Three_N_Sort_Schnorr_and_Shamir::k_way_unshuffle(vector<vector<int>> &matri
 
 
     #pragma omp parallel for collapse(2)
-    {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                temp[i][j % k * block_size + j / k] = matrix[i][j];
-            }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            temp[i][j % k * block_size + j / k] = matrix[i][j];
         }
     }
 
-    #pragma omp barrier
     matrix = move(temp);
 }
 
@@ -75,27 +72,25 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix) {
 
 
     #pragma omp parallel for collapse(2) schedule(dynamic)
-    {
-        for (int i = 0; i < n; i += block_size) {
-            for (int j = 0; j < n; j += block_size) {
-                ///The temporary block.
-                vector<int> temp(block_size * block_size);
-                ///The index in the block.
-                int index = 0;
+    for (int i = 0; i < n; i += block_size) {
+        for (int j = 0; j < n; j += block_size) {
+            ///The temporary block.
+            vector<int> temp(block_size * block_size);
+            ///The index in the block.
+            int index = 0;
 
-                for (int bi = 0; bi < block_size; ++bi) {
-                    for (int bj = 0; bj < block_size; ++bj) {
-                        temp[index++] = matrix[i + bi][j + bj];
-                    }
+            for (int bi = 0; bi < block_size; ++bi) {
+                for (int bj = 0; bj < block_size; ++bj) {
+                    temp[index++] = matrix[i + bi][j + bj];
                 }
+            }
 
-                sort(temp.begin(), temp.end());
+            sort(temp.begin(), temp.end());
 
-                index = 0;
-                for (int bi = 0; bi < block_size; ++bi) {
-                    for (int bj = 0; bj < block_size; ++bj) {
-                        matrix[i + bi][j + bj] = temp[index++];
-                    }
+            index = 0;
+            for (int bi = 0; bi < block_size; ++bi) {
+                for (int bj = 0; bj < block_size; ++bj) {
+                    matrix[i + bi][j + bj] = temp[index++];
                 }
             }
         }
@@ -113,20 +108,18 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_columns(vector<vector<int>> &matrix) 
 
 
     #pragma omp parallel for
-    {
-        for (int j = 0; j < n; ++j) {
-            ///The column.
-            vector<int> column(n);
+    for (int j = 0; j < n; ++j) {
+        ///The column.
+        vector<int> column(n);
 
-            for (int i = 0; i < n; ++i) {
-                column[i] = matrix[i][j];
-            }
+        for (int i = 0; i < n; ++i) {
+            column[i] = matrix[i][j];
+        }
 
-            sort(column.begin(), column.end());
+        sort(column.begin(), column.end());
 
-            for (int i = 0; i < n; ++i) {
-                matrix[i][j] = column[i];
-            }
+        for (int i = 0; i < n; ++i) {
+            matrix[i][j] = column[i];
         }
     }
 }
@@ -145,27 +138,25 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &
 
 
     #pragma omp parallel for schedule(dynamic)
-    {
-        for (int j = 0; j < n; j += slice_width) {
-            ///The slice.
-            vector<int> temp;
-            temp.reserve(n * slice_width);
+    for (int j = 0; j < n; j += slice_width) {
+        ///The slice.
+        vector<int> temp;
+        temp.reserve(n * slice_width);
 
-            for (int i = 0; i < n; ++i) {
-                for (int sj = 0; sj < slice_width && j + sj < n; ++sj) {
-                    temp.push_back(matrix[i][j + sj]);
-                }
+        for (int i = 0; i < n; ++i) {
+            for (int sj = 0; sj < slice_width && j + sj < n; ++sj) {
+                temp.push_back(matrix[i][j + sj]);
             }
+        }
 
-            sort(temp.begin(), temp.end());
+        sort(temp.begin(), temp.end());
 
-            ///The index in the slice.
-            int index = 0;
+        ///The index in the slice.
+        int index = 0;
 
-            for (int i = 0; i < n; ++i) {
-                for (int sj = 0; sj < slice_width && j + sj < n; ++sj) {
-                    matrix[i][j + sj] = temp[index++];
-                }
+        for (int i = 0; i < n; ++i) {
+            for (int sj = 0; sj < slice_width && j + sj < n; ++sj) {
+                matrix[i][j + sj] = temp[index++];
             }
         }
     }
@@ -182,14 +173,12 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_rows_alternating_direction(vector<vec
 
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < n; ++i) {
-            if (i % 2 == 0) { //sorted in ascending order
-                sort(matrix[i].begin(), matrix[i].end());
-            }
-            else { //sorted in descending order
-                sort(matrix[i].rbegin(), matrix[i].rend());
-            }
+    for (int i = 0; i < n; ++i) {
+        if (i % 2 == 0) { //sorted in ascending order
+            sort(matrix[i].begin(), matrix[i].end());
+        }
+        else { //sorted in descending order
+            sort(matrix[i].rbegin(), matrix[i].rend());
         }
     }
 }
@@ -220,11 +209,9 @@ void Three_N_Sort_Schnorr_and_Shamir::odd_even_transposition_sort_snake(vector<v
     //partial odd-even transposition sort (n^{3/4} steps)
     for (int step = 0; step < steps; ++step) {
         #pragma omp parallel for
-        {
-            for (int i = step % 2; i + 1 < n * n; i += 2) {
-                if (snake[i] > snake[i + 1]) {
-                    swap(snake[i], snake[i + 1]);
-                }
+        for (int i = step % 2; i < n * n - 1; i += 2) {
+            if (snake[i] > snake[i + 1]) {
+                swap(snake[i], snake[i + 1]);
             }
         }
     }

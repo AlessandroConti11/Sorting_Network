@@ -26,20 +26,16 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
     vector transposed(n, vector<int>(n));
 
     #pragma omp parallel for collapse(2)
-    {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                transposed[j][i] = matrix[i][j];
-            }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            transposed[j][i] = matrix[i][j];
         }
     }
     balance(transposed, true);
     #pragma omp parallel for collapse(2)
-    {
-        for (int i = 0; i < n; ++i) {
-            for (int j = 0; j < n; ++j) {
-                matrix[i][j] = transposed[j][i];
-            }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            matrix[i][j] = transposed[j][i];
         }
     }
 
@@ -53,10 +49,8 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
 
     //sort the rows
     #pragma omp parallel for
-    {
-        for (auto &row: matrix) {
-            sort(row.begin(), row.end());
-        }
+    for (auto &row: matrix) {
+        sort(row.begin(), row.end());
     }
 }
 
@@ -75,35 +69,33 @@ void Rotatesort::balance(vector<vector<int>> &matrix, bool horizontal_slice) {
 
 
     #pragma omp parallel for
-    {
-        for (int slice_i = 0; slice_i < sqrt_n; slice_i++) {
-            ///The slice.
-            vector slice(n, vector<int>(sqrt_n));
+    for (int slice_i = 0; slice_i < sqrt_n; slice_i++) {
+        ///The slice.
+        vector slice(n, vector<int>(sqrt_n));
 
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < sqrt_n; ++j) {
-                    slice[i][j] = horizontal_slice ?
-                                  matrix[slice_i * sqrt_n + j][i] : //{sqrt(n) x n}
-                                  matrix[i][slice_i * sqrt_n + j]; //{n x sqrt(n)}
-                }
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < sqrt_n; ++j) {
+                slice[i][j] = horizontal_slice ?
+                              matrix[slice_i * sqrt_n + j][i] : //{sqrt(n) x n}
+                              matrix[i][slice_i * sqrt_n + j]; //{n x sqrt(n)}
             }
+        }
 
-            //sort columns
-            sort_columns(slice);
-            //rotate rows
-            rotate_rows_balance(slice);
-            //sort columns
-            sort_columns(slice);
+        //sort columns
+        sort_columns(slice);
+        //rotate rows
+        rotate_rows_balance(slice);
+        //sort columns
+        sort_columns(slice);
 
-            //insert slice back
-            for (int i = 0; i < n; ++i) {
-                for (int j = 0; j < sqrt_n; ++j) {
-                    if (horizontal_slice) {
-                        matrix[slice_i * sqrt_n + j][i] = slice[i][j];
-                    }
-                    else {
-                        matrix[i][slice_i * sqrt_n + j] = slice[i][j];
-                    }
+        //insert slice back
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < sqrt_n; ++j) {
+                if (horizontal_slice) {
+                    matrix[slice_i * sqrt_n + j][i] = slice[i][j];
+                }
+                else {
+                    matrix[i][slice_i * sqrt_n + j] = slice[i][j];
                 }
             }
         }
@@ -134,13 +126,11 @@ void Rotatesort::shear(vector<vector<int>> &matrix) {
 
     //sort the rows in alternating direction
     #pragma omp parallel for
-    {
-        for (int i = 0; i < n; ++i) {
-            if (i % 2 == 0) { //even rows in ascending
-                sort(matrix[i].begin(), matrix[i].end());
-            } else { //odd rows in descending
-                sort(matrix[i].rbegin(), matrix[i].rend());
-            }
+    for (int i = 0; i < n; ++i) {
+        if (i % 2 == 0) { //even rows in ascending
+            sort(matrix[i].begin(), matrix[i].end());
+        } else { //odd rows in descending
+            sort(matrix[i].rbegin(), matrix[i].rend());
         }
     }
 
@@ -160,21 +150,18 @@ void Rotatesort::sort_columns(vector<vector<int>> &matrix) {
 
 
     #pragma omp parallel for
-    {
-        for (int col = 0; col < n; ++col) {
-            ///The column.
-            vector<int> temp(n);
+    for (int col = 0; col < n; ++col) {
+        ///The column.
+        vector<int> temp(n);
 
-            for (int row = 0; row < n; ++row) {
-                temp[row] = matrix[row][col];
-            }
-            sort(temp.begin(), temp.end());
-            for (int row = 0; row < n; ++row) {
-                matrix[row][col] = temp[row];
-            }
+        for (int row = 0; row < n; ++row) {
+            temp[row] = matrix[row][col];
+        }
+        sort(temp.begin(), temp.end());
+        for (int row = 0; row < n; ++row) {
+            matrix[row][col] = temp[row];
         }
     }
-
 }
 
 /**
@@ -192,11 +179,9 @@ void Rotatesort::rotate_rows_balance(vector<vector<int>> &matrix) {
 
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < n; ++i) {
-            //rotate row i by (i % sqrt(n)) positions
-            rotate(matrix[i].begin(), matrix[i].begin() + (i % sqrt_n), matrix[i].end());
-        }
+    for (int i = 0; i < n; ++i) {
+        //rotate row i by (i % sqrt(n)) positions
+        rotate(matrix[i].begin(), matrix[i].begin() + (i % sqrt_n), matrix[i].end());
     }
 }
 
@@ -215,10 +200,8 @@ void Rotatesort::rotate_rows_unblock(vector<vector<int>> &matrix) {
 
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < n; ++i) {
-            //rotate row i by (i * sqrt(n)) % n positions (used in unblock)
-            rotate(matrix[i].begin(), matrix[i].begin() + ((i * sqrt_n) % n), matrix[i].end());
-        }
+    for (int i = 0; i < n; ++i) {
+        //rotate row i by (i * sqrt(n)) % n positions (used in unblock)
+        rotate(matrix[i].begin(), matrix[i].begin() + ((i * sqrt_n) % n), matrix[i].end());
     }
 }

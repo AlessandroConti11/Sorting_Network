@@ -59,10 +59,8 @@ void Bitonic_Sort::merge_bitonic(std::vector<int> &array, const int start_positi
 
 
         #pragma omp parallel for
-        {
-            for (int i = start_position; i < start_position + m; ++i) {
-                compare_and_swap(array, i, i + m, direction);
-            }
+        for (int i = start_position; i < start_position + m; ++i) {
+            compare_and_swap(array, i, i + m, direction);
         }
 
         merge_bitonic(array, start_position, m, direction);

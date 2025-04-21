@@ -89,14 +89,12 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
 
     //sort the rows of the subarrays in parallel
     #pragma omp parallel for
-    {
-        for (int i = 0; i < k; i++) {
-            if (i < m) { //upper half ascending
-                sort(matrix[i].begin(), matrix[i].end());
-            }
-            else { //lower half descending
-                sort(matrix[i].rbegin(), matrix[i].rend());
-            }
+    for (int i = 0; i < k; i++) {
+        if (i < m) { //upper half ascending
+            sort(matrix[i].begin(), matrix[i].end());
+        }
+        else { //lower half descending
+            sort(matrix[i].rbegin(), matrix[i].rend());
         }
     }
 
@@ -104,14 +102,12 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
     sort_columns(matrix);
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < k; i++) {
-            if (i % 2 == 0) { //even rows descending
-                sort(matrix[i].rbegin(), matrix[i].rend());
-            }
-            else { //odd rows ascending
-                sort(matrix[i].begin(), matrix[i].end());
-            }
+    for (int i = 0; i < k; i++) {
+        if (i % 2 == 0) { //even rows descending
+            sort(matrix[i].rbegin(), matrix[i].rend());
+        }
+        else { //odd rows ascending
+            sort(matrix[i].begin(), matrix[i].end());
         }
     }
 
@@ -127,10 +123,8 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
  */
 void Four_Way_Mergesort::sort_rows(vector<vector<int>> &matrix) {
     #pragma omp parallel for
-    {
-        for (auto & i : matrix) {
-            sort(i.begin(), i.end());
-        }
+    for (auto & i : matrix) {
+        sort(i.begin(), i.end());
     }
 }
 
@@ -145,20 +139,18 @@ void Four_Way_Mergesort::sort_columns(vector<vector<int>> &matrix) {
 
 
     #pragma omp parallel for
-    {
-        for (int j = 0; j < n; j++) {
-            vector<int> column(n);
+    for (int j = 0; j < n; j++) {
+        vector<int> column(n);
 
-            for (int i = 0; i < n; i++) {
-                column[i] = matrix[i][j];
-            }
+        for (int i = 0; i < n; i++) {
+            column[i] = matrix[i][j];
+        }
 
-            //sort the column in ascending order
-            sort(column.begin(), column.end());
+        //sort the column in ascending order
+        sort(column.begin(), column.end());
 
-            for (int i = 0; i < n; i++) {
-                matrix[i][j] = column[i];
-            }
+        for (int i = 0; i < n; i++) {
+            matrix[i][j] = column[i];
         }
     }
 }
@@ -179,11 +171,9 @@ vector<vector<int>> Four_Way_Mergesort::extract_submatrix(const vector<vector<in
 
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < submatrix_size; i++) {
-            copy(matrix[row + i].begin() + column, matrix[row + i].begin() + column + submatrix_size,
-                 sub_matrix[i].begin());
-        }
+    for (int i = 0; i < submatrix_size; i++) {
+        copy(matrix[row + i].begin() + column, matrix[row + i].begin() + column + submatrix_size,
+             sub_matrix[i].begin());
     }
 
     return sub_matrix;
@@ -203,9 +193,7 @@ void Four_Way_Mergesort::insertSubMatrix(vector<vector<int>>& matrix, const vect
 
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < submatrix_size; i++) {
-            copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);
-        }
+    for (int i = 0; i < submatrix_size; i++) {
+        copy(sub_matrix[i].begin(), sub_matrix[i].end(), matrix[row + i].begin() + column);
     }
 }

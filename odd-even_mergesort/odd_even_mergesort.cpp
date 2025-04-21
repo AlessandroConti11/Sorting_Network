@@ -67,8 +67,9 @@ void Odd_Even_Mergesort::merge_odd_even(vector<int>& array, const int start_posi
         }
 
         #pragma omp parallel for
-        for (int i = start_position + distance_to_compare; i + distance_to_compare < start_position + finish_position; i += m)
+        for (int i = start_position + distance_to_compare; i < start_position + finish_position - distance_to_compare; i += m) {
             compare_and_swap(array, i, i + distance_to_compare);
+        }
     }
     else {
         compare_and_swap(array, start_position, start_position + distance_to_compare);

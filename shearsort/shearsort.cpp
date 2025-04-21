@@ -41,13 +41,11 @@ void Shearsort::sort_rows(vector<vector<int>>& matrix) {
     const int matrix_size = static_cast<int>(matrix.size());
 
     #pragma omp parallel for
-    {
-        for (int i = 0; i < matrix_size; i++) {
-            if (i % 2 == 0) { //even rows in ascending
-                sort(matrix[i].begin(), matrix[i].end());
-            } else { //odd rows in descending
-                sort(matrix[i].rbegin(), matrix[i].rend());
-            }
+    for (int i = 0; i < matrix_size; i++) {
+        if (i % 2 == 0) { //even rows in ascending
+            sort(matrix[i].begin(), matrix[i].end());
+        } else { //odd rows in descending
+            sort(matrix[i].rbegin(), matrix[i].rend());
         }
     }
 }
@@ -63,20 +61,18 @@ void Shearsort::sort_columns(vector<vector<int>>& matrix) {
 
 
     #pragma omp parallel for
-    {
-        for (int j = 0; j < matrix_size; j++) {
-            ///The column.
-            vector<int> column(matrix_size);
+    for (int j = 0; j < matrix_size; j++) {
+        ///The column.
+        vector<int> column(matrix_size);
 
-            for (int i = 0; i < matrix_size; i++) {
-                column[i] = matrix[i][j];
-            }
+        for (int i = 0; i < matrix_size; i++) {
+            column[i] = matrix[i][j];
+        }
 
-            sort(column.begin(), column.end());
+        sort(column.begin(), column.end());
 
-            for (int i = 0; i < matrix_size; i++) {
-                matrix[i][j] = column[i];
-            }
+        for (int i = 0; i < matrix_size; i++) {
+            matrix[i][j] = column[i];
         }
     }
 }
