@@ -6,7 +6,7 @@ Author: Alessandro Conti - [AlessandroConti11](https://github.com/AlessandroCont
 License: [MIT license](LICENSE).
 
 
-Tags: `#2D-array`, `#2D_odd-even_transposition_sort`, `#3n_sort`, `#3n_sort_of_Schnorr_and_Shamir`, `#4-way_mergesort`, `#adapted_bitonic_sort`, `#array`, `#bitonic_sort`, `#c++`, `#cpp`, `#LS3_sort`, `#odd-even_mergesort`, `#odd-even_transposition_sort`, `#rotatesort`, `#shearsort`, `#sorting`, `#sorting_network`.
+Tags: `#2D-array`, `#2D_odd-even_transposition_sort`, `#3n_sort`, `#3n_sort_of_Schnorr_and_Shamir`, `#4-way_mergesort`, `#adapted_bitonic_sort`, `#array`, `#bitonic_sort`, `#c++`, `#cpp`, `#LS3_sort`, `#odd-even_mergesort`, `#odd-even_transposition_sort`, `#OpenMP`, `#rotatesort`, `#shearsort`, `#sorting`, `#sorting_network`.
 
 
 ## Specification
@@ -22,7 +22,7 @@ The implemented sorting networks are:
 - [odd-even mergesort](odd-even_mergesort/README.md)
 - [bitonic sort](bitonic_sort/README.md)
 - [adapted bitonic sort](adapted_bitonic_sort/README.md)
-- [LS3 sort](ls3_sort/README.md)
+- [LS3 sort](LS3_sort/README.md)
 - [4-way mergesort](4-way_mergesort/README.md)
 - [rotatesort](rotatesort/README.md)
 - [3n sort of Schnorr and Shamir](3n_sort_Schnorr_and_Shamir/README.md)
@@ -40,16 +40,17 @@ The steps below refer to a Unix environment, for other environments the commands
     ```
 1. compile each source file into an object file
     ```bash
-    g++ -std=c++20 -Wall -Werror -Wextra -O2 -c FILE.cpp -o FILE.o
+    g++ -std=c++20 -Wall -Werror -Wextra -O2 -fopenmp -c FILE.cpp -o FILE.o
     ```
 2. link all object files into an executable
     ```bash
-    g++ -std=c++20 -Wall -Werror -Wextra -O2 main.o \
+    g++ -std=c++20 -Wall -Werror -Wextra -O2 -fopenmp\
+    main.o \
     odd-even_transposition_sort/odd-even_transposition_sort.o \
     odd-even_mergesort/odd-even_mergesort.o \
     bitonic_sort/bitonic_sort.o \
     adapted_bitonic_sort/adapted_bitonic_sort.o \
-    ls3_sort/ls3_sort.o \
+    LS3_sort/LS3_sort.o \
     4-way_mergesort/4-way_mergesort.o \
     rotatesort/rotatesort.o \
     3n_sort_Schnorr_and_Shamir/3n_sort_Schnorr_and_Shamir.o \

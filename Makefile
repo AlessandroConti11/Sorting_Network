@@ -3,19 +3,19 @@ EXECUTABLE = sorting_network
 
 #Compiler
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -O2
+CXXFLAGS = -std=c++20 -Wall -Werror -Wextra -O2 -fopenmp
 
 #Source directories
 SRC_DIRS = odd-even_transposition_sort \
            odd-even_mergesort \
            bitonic_sort \
            adapted_bitonic_sort \
-           ls3_sort \
+           LS3_sort \
            4-way_mergesort \
            rotatesort \
            3n_sort_Schnorr_and_Shamir \
            2D_odd-even_transposition_sort \
-           shearsort
+           shearsort \
 
 #Source file
 SRC = main.cpp \

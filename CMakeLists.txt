@@ -26,3 +26,8 @@ add_executable(sorting_network main.cpp
         shearsort/shearsort.cpp
         shearsort/shearsort.h
         shearsort/shearsort.cpp)
+
+find_package(OpenMP REQUIRED)
+if(OpenMP_CXX_FOUND)
+    target_link_libraries(sorting_network PUBLIC OpenMP::OpenMP_CXX)
+endif()
