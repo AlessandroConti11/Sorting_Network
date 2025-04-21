@@ -11,16 +11,23 @@
  * @param matrix the unsorted matrix.
  */
 void Three_N_Sort_Schnorr_and_Shamir::three_n_sort(vector<vector<int>> &matrix) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
-    const int k = static_cast<int>(round(pow(n, 1 / 4)));
-    const int block_size = static_cast<int>(round(pow(n, 3 / 4)));
 
-    sort_blocks(matrix, block_size); //n^{3/4}
-    k_way_unshuffle(matrix, k); //n^{1/4} on rows
-    sort_blocks(matrix, block_size); //n^{3/4}
+
+    //sort blocks
+    sort_blocks(matrix); //n^{3/4}
+    //{n^{1/4}}-way unshuffle along the rows
+    k_way_unshuffle(matrix, static_cast<int>(pow(n, 1.0 / 4.0))); //n^{1/4} on rows
+    //sort blocks
+    sort_blocks(matrix); //n^{3/4}
+    //sort columns
     sort_columns(matrix);
-    sort_vertical_slices(matrix, block_size); //n^{3/4}
+    //sort vertical slices
+    sort_vertical_slices(matrix); //n^{3/4}
+    //sort rows
     sort_rows_alternating_direction(matrix);
+    //n^{3/4} steps of oets
     odd_even_transposition_sort_snake(matrix); //n^{3/4} steps
 }
 
@@ -32,9 +39,13 @@ void Three_N_Sort_Schnorr_and_Shamir::three_n_sort(vector<vector<int>> &matrix) 
  * @param k the number of unshuffle way.
  */
 void Three_N_Sort_Schnorr_and_Shamir::k_way_unshuffle(vector<vector<int>> &matrix, const int k) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
+    ///The block size.
     const int block_size = n / k;
+    ///The permutated matrix.
     vector temp(n, vector<int>(n));
+
 
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -52,12 +63,18 @@ void Three_N_Sort_Schnorr_and_Shamir::k_way_unshuffle(vector<vector<int>> &matri
  * @param matrix the unsorted matrix.
  * @param block_size the block size.
  */
-void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix, const int block_size) {
+void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
+    ///The block size.
+    const int block_size = static_cast<int>(pow(n, 3.0 / 4.0));
+
 
     for (int i = 0; i < n; i += block_size) {
         for (int j = 0; j < n; j += block_size) {
+            ///The temporary block.
             vector<int> temp(block_size * block_size);
+            ///The index in the block.
             int index = 0;
 
             for (int bi = 0; bi < block_size; ++bi) {
@@ -84,19 +101,22 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix, c
  * @param matrix the unsorted matrix.
  */
 void Three_N_Sort_Schnorr_and_Shamir::sort_columns(vector<vector<int>> &matrix) {
+    ////The matrix size.
     const int n = static_cast<int>(matrix.size());
 
+
     for (int j = 0; j < n; ++j) {
-        vector<int> temp(n);
+        ///The column.
+        vector<int> column(n);
 
         for (int i = 0; i < n; ++i) {
-            temp[i] = matrix[i][j];
+            column[i] = matrix[i][j];
         }
 
-        sort(temp.begin(), temp.end());
+        sort(column.begin(), column.end());
 
         for (int i = 0; i < n; ++i) {
-            matrix[i][j] = temp[i];
+            matrix[i][j] = column[i];
         }
     }
 }
@@ -107,10 +127,15 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_columns(vector<vector<int>> &matrix) 
  * @param matrix the unsorted matrix.
  * @param slice_width the slice width.
  */
-void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &matrix, const int slice_width) {
+void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &matrix) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
+    ///The slice width.
+    const int slice_width = static_cast<int>(pow(n, 3.0 / 4.0));
+
 
     for (int j = 0; j < n; j += slice_width) {
+        ///The slice.
         vector<int> temp;
         temp.reserve(n * slice_width);
 
@@ -122,6 +147,7 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &
 
         sort(temp.begin(), temp.end());
 
+        ///The index in the slice.
         int index = 0;
 
         for (int i = 0; i < n; ++i) {
@@ -139,7 +165,9 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &
  * @param matrix the unsorted matrix.
  */
 void Three_N_Sort_Schnorr_and_Shamir::sort_rows_alternating_direction(vector<vector<int>> &matrix) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
+
 
     for (int i = 0; i < n; ++i) {
         if (i % 2 == 0) { //sorted in ascending order
@@ -157,10 +185,13 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_rows_alternating_direction(vector<vec
  * @param matrix the unsorted matrix.
  */
 void Three_N_Sort_Schnorr_and_Shamir::odd_even_transposition_sort_snake(vector<vector<int>> &matrix) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
-    const int steps = static_cast<int>(pow(n, 0.75)); // Only n^{3/4} steps
-    const int total = n * n;
+    ///The number of odd-even transposition steps.
+    const int steps = static_cast<int>(round(pow(n, 3.0 / 4.0))); //only n^{3/4} steps
+    ///The array.
     vector<int> snake;
+
 
     for (int i = 0; i < n; ++i) {
         if (i % 2 == 0) { //sorted in ascending order
@@ -173,15 +204,14 @@ void Three_N_Sort_Schnorr_and_Shamir::odd_even_transposition_sort_snake(vector<v
 
     //partial odd-even transposition sort (n^{3/4} steps)
     for (int step = 0; step < steps; ++step) {
-        int start = step % 2; //even or odd step
-
-        for (int i = start; i + 1 < total; i += 2) {
+        for (int i = step % 2; i + 1 < n * n; i += 2) {
             if (snake[i] > snake[i + 1]) {
                 swap(snake[i], snake[i + 1]);
             }
         }
     }
 
+    ///The index in the array.
     int index = 0;
 
     for (int i = 0; i < n; ++i) {
