@@ -18,29 +18,29 @@ void Bitonic_Sort::bitonic_sort(std::vector<int>& array) {
  *
  * @param array the unsorted array.
  * @param start_position the starting position.
- * @param finish_position the finishing position.
+ * @param array_size the array size.
  * @param direction the sorting direction.
  */
-void Bitonic_Sort::sort_bitonic(std::vector<int> &array, const int start_position, const int finish_position, const bool direction) {
-    if(finish_position > 1) {
-        ///The new final position.
-        const int m = finish_position / 2;
+void Bitonic_Sort::sort_bitonic(std::vector<int> &array, const int start_position, const int array_size, const bool direction) {
+    if(array_size > 1) {
+        ///The subarray size.
+        const int subarray_size = array_size / 2;
 
 
         #pragma omp parallel sections
         {
             #pragma omp section
             {
-                sort_bitonic(array, start_position, m, ASCENDING);
+                sort_bitonic(array, start_position, subarray_size, ASCENDING);
             }
 
             #pragma omp section
             {
-                sort_bitonic(array, start_position + m, m, DESCENDING);
+                sort_bitonic(array, start_position + subarray_size, subarray_size, DESCENDING);
             }
         }
 
-        merge_bitonic(array, start_position, finish_position, direction);
+        merge_bitonic(array, start_position, array_size, direction);
     }
 }
 
@@ -49,22 +49,22 @@ void Bitonic_Sort::sort_bitonic(std::vector<int> &array, const int start_positio
  *
  * @param array the unsorted array.
  * @param start_position the starting position.
- * @param finish_position the finishing position.
+ * @param array_size the array size.
  * @param direction the sorting direction.
  */
-void Bitonic_Sort::merge_bitonic(std::vector<int> &array, const int start_position, const int finish_position, const bool direction) {
-    if(finish_position > 1) {
-        ///The new final position.
-        const int m = finish_position / 2;
+void Bitonic_Sort::merge_bitonic(std::vector<int> &array, const int start_position, const int array_size, const bool direction) {
+    if(array_size > 1) {
+        ///The subarray size.
+        const int subarray_size = array_size / 2;
 
 
         #pragma omp parallel for
-        for (int i = start_position; i < start_position + m; ++i) {
-            compare_and_swap(array, i, i + m, direction);
+        for (int i = start_position; i < start_position + subarray_size; ++i) {
+            compare_and_swap(array, i, i + subarray_size, direction);
         }
 
-        merge_bitonic(array, start_position, m, direction);
-        merge_bitonic(array, start_position + m, m, direction);
+        merge_bitonic(array, start_position, subarray_size, direction);
+        merge_bitonic(array, start_position + subarray_size, subarray_size, direction);
     }
 }
 
@@ -77,7 +77,7 @@ void Bitonic_Sort::merge_bitonic(std::vector<int> &array, const int start_positi
  * @param direction the sorting direction.
  */
 void Bitonic_Sort::compare_and_swap(vector<int> &array, const int first_index, const int second_index, const bool direction) {
-    if(direction == (array[first_index] > array[second_index])) {
+    if(direction == array[first_index] > array[second_index]) {
         swap(array[first_index], array[second_index]);
     }
 }
