@@ -15,7 +15,7 @@ public:
     static void rotatesort(vector<vector<int>> &matrix);
 
 private:
-    static void balance(vector<vector<int>> &matrix, bool horizontal_slice);
+    static void balance(vector<vector<int>> &matrix);
     static void unblock(vector<vector<int>> &matrix);
     static void shear(vector<vector<int>> &matrix);
 

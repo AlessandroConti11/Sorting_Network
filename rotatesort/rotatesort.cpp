@@ -6,7 +6,7 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in row-major direction.
+ * @details the sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -16,7 +16,7 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
 
 
     //balance each vertical slice
-    balance(matrix, false);
+    balance(matrix);;
 
     //unblock
     unblock(matrix);
@@ -31,7 +31,7 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
             transposed[j][i] = matrix[i][j];
         }
     }
-    balance(transposed, true);
+    balance(transposed);
     #pragma omp parallel for collapse(2)
     for (int i = 0; i < n; ++i) {
         for (int j = 0; j < n; ++j) {
@@ -47,11 +47,8 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
     shear(matrix);
     shear(matrix);
 
-    //sort the rows
-    #pragma omp parallel for
-    for (auto &row: matrix) {
-        sort(row.begin(), row.end());
-    }
+    //sort the last unsorted row
+    sort(matrix[0].begin(), matrix[0].end());
 }
 
 
@@ -59,9 +56,8 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
  * The balance operation of rotatesort.
  *
  * @param matrix the matrix.
- * @param horizontal_slice the balance operation is on the horizontal slices.
  */
-void Rotatesort::balance(vector<vector<int>> &matrix, bool horizontal_slice) {
+void Rotatesort::balance(vector<vector<int>> &matrix) {
     ///The matrix size.
     const int n = static_cast<int>(matrix.size());
     ///The square root of the matrix size.
@@ -75,9 +71,7 @@ void Rotatesort::balance(vector<vector<int>> &matrix, bool horizontal_slice) {
 
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < sqrt_n; ++j) {
-                slice[i][j] = horizontal_slice ?
-                              matrix[slice_i * sqrt_n + j][i] : //{sqrt(n) x n}
-                              matrix[i][slice_i * sqrt_n + j]; //{n x sqrt(n)}
+                slice[i][j] = matrix[i][slice_i * sqrt_n + j]; //{n x sqrt(n)}
             }
         }
 
@@ -91,12 +85,7 @@ void Rotatesort::balance(vector<vector<int>> &matrix, bool horizontal_slice) {
         //insert slice back
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < sqrt_n; ++j) {
-                if (horizontal_slice) {
-                    matrix[slice_i * sqrt_n + j][i] = slice[i][j];
-                }
-                else {
-                    matrix[i][slice_i * sqrt_n + j] = slice[i][j];
-                }
+                matrix[i][slice_i * sqrt_n + j] = slice[i][j];
             }
         }
     }
