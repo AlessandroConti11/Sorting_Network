@@ -14,7 +14,7 @@ void Shearsort::shearSort(vector<vector<int>>& matrix) {
     ///The matrix size.
     const int matrix_size = static_cast<int>(matrix.size());
     ///The logarithm of the matrix size.
-    const int logn = static_cast<int>(log2(matrix_size)) + 1;
+    const int logn = static_cast<int>(log2(matrix_size));
 
 
     for (int i = 0; i < logn; i++) {
