@@ -18,7 +18,7 @@ void Three_N_Sort_Schnorr_and_Shamir::three_n_sort(vector<vector<int>> &matrix) 
     //sort blocks
     sort_blocks(matrix); //n^{3/4}
     //{n^{1/4}}-way unshuffle along the rows
-    k_way_unshuffle(matrix, static_cast<int>(pow(n, 1.0 / 4.0))); //n^{1/4} on rows
+    k_way_unshuffle(matrix, static_cast<int>(ceil(pow(n, 1.0 / 4.0)))); //n^{1/4} on rows //TODO nuovooooooo
     //sort blocks
     sort_blocks(matrix); //n^{3/4}
     //sort columns
