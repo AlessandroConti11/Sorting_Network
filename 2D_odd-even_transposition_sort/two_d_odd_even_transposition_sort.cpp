@@ -40,23 +40,29 @@ void Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(vector<vector<int>>&
  * @return true if the column is sorted, false otherwise.
  */
 bool Two_D_Odd_Even_Transposition_Sort::sort_row_oets_step(vector<vector<int>> &matrix, bool is_odd) {
+    ///The matrix size.
     const int n = static_cast<int>(matrix.size());
+    ///The array is sorted or not.
     bool is_sorted_rows = false;
+    ///The sorting direction of the rows.
+    bool direction = false;
 
-    #pragma omp parallel for shared(matrix) reduction(|:is_sorted_rows)
+
+    #pragma omp parallel for reduction(|:is_sorted_rows) default(none) shared(matrix, n, is_odd) private(direction)
     for (int i = 0; i < n; ++i) {
-        ///The sorting direction of the rows.
-        bool direction = (i % 2 == 0);
+        direction = i % 2 == 0;
 
-        for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
+        for (int j = is_odd ? 1 : 0; j < n - 1; j += 2) {
             ///The index of the first value to be swapped.
             int a = j;
             ///The index of the second value to be swapped.
             int b = j + 1;
 
-            if (!direction) swap(a, b);
 
-            #pragma omp critical
+            if (!direction) {
+                swap(a, b);
+            }
+
             {
                 if (matrix[i][a] > matrix[i][b]) {
                     swap(matrix[i][a], matrix[i][b]);
@@ -83,7 +89,8 @@ bool Two_D_Odd_Even_Transposition_Sort::sort_column_oets_step(vector<vector<int>
     ///The columns is sorted or not.
     bool is_sorted_columns = false;
 
-    #pragma omp parallel for shared(matrix) reduction(|:is_sorted_columns)
+
+    #pragma omp parallel for reduction(|:is_sorted_columns) default(none) shared(matrix, n, is_odd)
     for (int i = 0; i < n; ++i) {
         for (int j = (is_odd ? 1 : 0); j < n - 1; j += 2) {
 
