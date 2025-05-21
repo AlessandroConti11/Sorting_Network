@@ -14,19 +14,19 @@ def rotatesort(n):
 def schnorr_shamir(n):
     return 3 * n + 7 * n**(3/4) + n**(1/4)
 
-
 def shearsort(n):
     return n * (np.log2(n) + 3) - 2
 
 # Range di n
 n_values = np.arange(1, 211, 1)
 
-# Calcolo valori
-ls3_vals = ls3_sort(n_values)
-merge4_vals = mergesort_4way(n_values)
-rotate_vals = rotatesort(n_values)
-schnorr_vals = schnorr_shamir(n_values)
-shearsort_vals = shearsort(n_values)
+# Calcolo valori e conversione a interi
+ls3_vals = ls3_sort(n_values).astype(int)
+merge4_vals = mergesort_4way(n_values).astype(int)
+rotate_vals = np.round(rotatesort(n_values)).astype(int)
+schnorr_vals = np.round(schnorr_shamir(n_values)).astype(int)
+shearsort_vals = np.round(shearsort(n_values)).astype(int)
+
 
 
 
