@@ -15,7 +15,7 @@ In this repository you can find the implementation of some sorting networks.
 
 A **Sorting Network** is a comparator network that sorts all input sequences. 
 Sorting networks are special cases of general sorting algorithms, since all comparisons are data-independent. 
-This makes sorting network suitable for the implementation in hardware or in parallel processor arrays, sorting on two-dimensional processor arrays.
+This makes sorting network suitable for the implementation in hardware or in parallel processor arrays, sorting on two-dimensional processor arrays. 
 
 The implemented sorting networks are:
 - [odd-even transposition sort](odd-even_transposition_sort/README.md)
@@ -29,10 +29,16 @@ The implemented sorting networks are:
 - [2D odd-even transposition sort](2D_odd-even_transposition_sort/README.md)
 - [shearsort](shearsort/README.md).
 
+In this repository, in addition to the implementation of sorting networks, there is also a python script that compares the various complexities of the implemented algorithms.
+
+For more details, you can read the [slides](bidimensional_sorting_v4.pdf) explaining the various sorting networks in detail.
+
 
 ## How to run
 
 The steps below refer to a Unix environment, for other environments the commands may change.
+
+### The implementation of sorting networks
 
 0. install gcc
     ```bash
@@ -104,6 +110,22 @@ The CMakeLists.txt in the repository can also be used to compile the code.
     ./sorting_network
     ```
 
+### The comparison of algorithm complexities
+
+0. install python and pip
+   ```bash
+   sudo apt-get install python3 && \
+   sudo apt-get install python3-pip
+   ```
+1. install the requirements
+   ```bash
+   pip install -r requirements.txt
+   ```
+2. run the script
+   ```bash
+   python3 sorting_network_complexity.py
+   ```
+
 
 ## Contribute
 
@@ -115,6 +137,7 @@ The CMakeLists.txt in the repository can also be used to compile the code.
     4. **PUSH** your work back up to your fork
     5. submit a **PULL REQUEST** so that I can review your changes
   > NOTE: Be sure to merge the latest from "upstream" before making a pull request!
+
 
 ### Code Style
 
