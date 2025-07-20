@@ -72,7 +72,7 @@ The steps below refer to a Unix environment, for other environments the commands
 <br>
 
 The Makefile in the repository can also be used to compile the code.
-- this option allows you to compile with the following tags: *-std=c++20 -Wall -Werror -Wextra -O2*
+- this option allows you to compile with the following tags: *-std=c++20 -Wall -Werror -Wextra -O2 -fopenmp*
     ```bash
     make
     ```
