@@ -12,4 +12,4 @@ The merging process is done in an odd-even manner, meaning it alternates between
 
 The computational cost for odd-even mergesort is $\mathcal{O}{\left(n \log^2{n}\right)}$. 
 More precisely: we have $T{\left(n > 2\right)} = {2 T{\left(\frac{n}{2}\right)}} + \frac{n}{2} - 1$, $T{\left(2\right)} = 1$, so $T{\left(n\right)} = \frac{n}{2} {\left(\log{\left(n\right)} - 1\right)} + 1$ merge comparison.
-This means that overall we have $\log{n} {\left(\frac{n}{2} {\left(\log{\left(n\right)} - 1\right)} + 1\right)}$ comparators.
+This means that overall we have $\frac{n}{4} \log{n} \left(\log{n} - 1\right) + n - 1$ comparators.
