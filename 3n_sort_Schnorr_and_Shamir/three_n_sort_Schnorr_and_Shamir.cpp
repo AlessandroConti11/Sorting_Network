@@ -62,7 +62,6 @@ void Three_N_Sort_Schnorr_and_Shamir::k_way_unshuffle(vector<vector<int>> &matri
  * Function that sorts the blocks of a matrix.
  *
  * @param matrix the unsorted matrix.
- * @param block_size the block size.
  */
 void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix) {
     ///The matrix size.
