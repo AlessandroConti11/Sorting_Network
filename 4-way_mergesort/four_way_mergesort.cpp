@@ -1,3 +1,4 @@
+#include "../odd-even_transposition_sort/odd_even_transposition_sort.h"
 #include "four_way_mergesort.h"
 
 
@@ -19,7 +20,10 @@ void Four_Way_Mergesort::four_way_mergesort(vector<vector<int>> &matrix) {
 /**
  * The roughsort algorithm of 4-way mergesort.
  *
- * @details transform a unsorted matrix into a roughly sorted matrix.
+ * @details C(n) = 4C(n/2) + 2(n^3 - n^2) = O(n^3)
+ * @details T_{parallel}(n) = 7n
+ *
+ * @note transform a unsorted matrix into a roughly sorted matrix.
  *
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
@@ -78,6 +82,9 @@ void Four_Way_Mergesort::roughsort(vector<vector<int>> &matrix, const int k) {
 /**
  * The merge algorithm of 4-way mergesort.
  *
+ * @details C(n) = n (n(n - 1)/2) + n (n(n - 1)/2) + n (n(n - 1)/2) + n (n(n - 1)/2) = 2(n^3 - n^2)
+ * @details T_{parallel}(n) = n/2 + n + n + n/2 = 3n
+ *
  * @param matrix the unsorted array.
  */
 void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
@@ -90,11 +97,13 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
     //sort the rows of the subarrays in parallel
     #pragma omp parallel for
     for (int i = 0; i < k; i++) {
-        if (i < m) { //upper half ascending
-            sort(matrix[i].begin(), matrix[i].end());
-        }
-        else { //lower half descending
-            sort(matrix[i].rbegin(), matrix[i].rend());
+        for (int j = 0; j < k; j += m) { //j = 0 (left), j = m (right)
+            if (i < m) { //upper half
+                sort(matrix[i].begin() + j, matrix[i].begin() + j + m); //ascending
+            }
+            else { //lower half
+                sort(matrix[i].rbegin() + (k - j - m), matrix[i].rbegin() + (k - j)); //descending
+            }
         }
     }
 
@@ -119,17 +128,25 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
 /**
  * Function that sorts the rows.
  *
+ * @details C(n) = n (n(n - 1)/2) = (n^3 - n^2)/2
+ * @details T_{parallel}(n) = n
+ *
+ * @note To sort the rows, use the OETS.
+ *
  * @param matrix the unsorted matrix.
  */
 void Four_Way_Mergesort::sort_rows(vector<vector<int>> &matrix) {
     #pragma omp parallel for
-    for (auto & i : matrix) {
-        sort(i.begin(), i.end());
+    for (auto & row : matrix) {
+        Odd_Even_Transposition_Sort::odd_even_transposition_sort(row);
     }
 }
 
 /**
  * Function that sorts the columns.
+ *
+ * @details C(n) = n (n(n - 1)/2)
+ * @details T_{parallel}(n) = n
  *
  * @param matrix the unsorted matrix.
  */
@@ -147,7 +164,7 @@ void Four_Way_Mergesort::sort_columns(vector<vector<int>> &matrix) {
         }
 
         //sort the column in ascending order
-        sort(column.begin(), column.end());
+        Odd_Even_Transposition_Sort::odd_even_transposition_sort(column);
 
         for (int i = 0; i < n; i++) {
             matrix[i][j] = column[i];
