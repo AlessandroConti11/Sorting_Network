@@ -4,7 +4,10 @@
 /**
  * Odd-even transposition sort.
  *
- * @details Odd-even transposition sort step: \n 1. odd phase; \n 2. even phase.
+ * @details C(n) = n (n - 1)/2
+ * @details T_{parallel}(n) = n
+ *
+ * @note Odd-even transposition sort step: \n 1. odd phase; \n 2. even phase.
  *
  * @param unsorted_array the unsorted array.
  */
