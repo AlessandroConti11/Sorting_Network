@@ -77,7 +77,7 @@ void Bitonic_Sort::merge_bitonic(std::vector<int> &array, const int start_positi
  * @param direction the sorting direction.
  */
 void Bitonic_Sort::compare_and_swap(vector<int> &array, const int first_index, const int second_index, const bool direction) {
-    if(direction == array[first_index] > array[second_index]) {
+    if(direction == (array[first_index] > array[second_index])) {
         swap(array[first_index], array[second_index]);
     }
 }
