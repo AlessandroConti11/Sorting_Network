@@ -16,6 +16,9 @@ void Odd_Even_Mergesort::odd_even_mergesort(vector<int>& array) {
 /**
  * The mergesort algorithm of odd-even mergesort.
  *
+ * @details C(n) = 2 C(n/2) + M(n), C(1) = 0
+ * @details --> C(n) = n/4 (log_2{n} - 1) log_2{n} + n - 1
+ *
  * @param array the unsorted array.
  * @param start_position the starting position.
  * @param finish_position the finishing position.
@@ -45,6 +48,9 @@ void Odd_Even_Mergesort::mergesort_odd_even(vector<int>& array, const int start_
 
 /**
  * The merge algorithm of odd-even mergesort.
+ *
+ * @details M(n) = 2 M(n/2) + (n/2 - 1), M(2) = 1
+ * @details --> M(n) = n/2 (log_2{n} - 1) + 1
  *
  * @param array the unsorted array.
  * @param start_position the starting position.
