@@ -18,6 +18,9 @@ void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
 /**
  * The sort algorithm of LS3 sort.
  *
+ * @details C(n) = 4C(n/2) + (4n^3 - n^2)/2 = O(n^3)
+ * @details T_{parallel}(n) = 9n
+ *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
  */
@@ -72,18 +75,24 @@ void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, const int n) {
 /**
  * The merge algorithm of LS3 sort.
  *
+ * @details C(n) = 0 + k^2(2k - 1)/2 + k^3 = (4k^3 - k^2)/2
+ * @details T_{parallel}(n) = k/2 + 2k + 2k = 4.5k
+ *
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
  */
 void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, const int k) {
     shuffle(matrix, k);
     sort_double_column_in_snake_direction(matrix, k);
-    oets_step(matrix, k);
+    oets_step(matrix, k); // 2k oets required
 }
 
 
 /**
  * The shuffle basic operation of LS3 sort.
+ *
+ * @details C(n) = 0 --> no comparator is required
+ * @details T_{parallel}(n) = n/2
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
@@ -99,6 +108,9 @@ void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
 
 /**
  * The oets basic operation of LS3 sort.
+ *
+ * @details C(n) = 2n * n^2/2 = n^3
+ * @details T_{parallel}(n) = 2n
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
@@ -129,7 +141,7 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
         }
     }
 
-    //oets step
+    //oets step - 2k oets-steps to the snake
     Odd_Even_Transposition_Sort::odd_even_transposition_sort(flattened);
 
     #pragma omp parallel for shared(flattened)
@@ -149,6 +161,9 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
 
 /**
  * Function that sorts each double column in snake-like direction.
+ *
+ * @details C(n) = n/2 (2n (2n - 1)/2) = n^2 (2n - 1)/2
+ * @details T_{parallel}(n) = 2n
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
