@@ -1,5 +1,6 @@
 #include "three_n_sort_Schnorr_and_Shamir.h"
 
+#include "../4-way_mergesort/four_way_mergesort.h"
 #include "../odd-even_transposition_sort/odd_even_transposition_sort.h"
 
 
@@ -76,22 +77,19 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix) {
     for (int i = 0; i < n; i += block_size) {
         for (int j = 0; j < n; j += block_size) {
             ///The temporary block.
-            vector<int> temp(block_size * block_size);
-            ///The index in the block.
-            int index = 0;
+            vector<vector<int>> temp(block_size, vector<int>(block_size));
 
             for (int bi = 0; bi < block_size; ++bi) {
                 for (int bj = 0; bj < block_size; ++bj) {
-                    temp[index++] = matrix[i + bi][j + bj];
+                    temp[bi][bj] = matrix[i + bi][j + bj];
                 }
             }
 
-            sort(temp.begin(), temp.end());
+            Four_Way_Mergesort::four_way_mergesort(temp);
 
-            index = 0;
             for (int bi = 0; bi < block_size; ++bi) {
                 for (int bj = 0; bj < block_size; ++bj) {
-                    matrix[i + bi][j + bj] = temp[index++];
+                    matrix[i + bi][j + bj] = temp[bi][bj];
                 }
             }
         }
@@ -117,7 +115,7 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_columns(vector<vector<int>> &matrix) 
             column[i] = matrix[i][j];
         }
 
-        sort(column.begin(), column.end());
+        Odd_Even_Transposition_Sort::odd_even_transposition_sort(column);
 
         for (int i = 0; i < n; ++i) {
             matrix[i][j] = column[i];
@@ -150,7 +148,7 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &
             }
         }
 
-        sort(temp.begin(), temp.end());
+        Odd_Even_Transposition_Sort::odd_even_transposition_sort(temp);
 
         ///The index in the slice.
         int index = 0;
@@ -176,10 +174,11 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_rows_alternating_direction(vector<vec
     #pragma omp parallel for
     for (int i = 0; i < n; ++i) {
         if (i % 2 == 0) { //sorted in ascending order
-            sort(matrix[i].begin(), matrix[i].end());
+            Odd_Even_Transposition_Sort::oets_odd_step(matrix[i]);
         }
         else { //sorted in descending order
-            sort(matrix[i].rbegin(), matrix[i].rend());
+            Odd_Even_Transposition_Sort::oets_even_step(matrix[i]);
+            reverse(matrix[i].begin(), matrix[i].end());
         }
     }
 }
@@ -208,21 +207,21 @@ void Three_N_Sort_Schnorr_and_Shamir::odd_even_transposition_sort_snake(vector<v
     }
 
     //partial odd-even transposition sort (n^{3/4} steps)
+#pragma omp parallel for
     for (int step = 0; step < steps / 2; ++step) {
         Odd_Even_Transposition_Sort::oets_odd_step(snake);
         Odd_Even_Transposition_Sort::oets_even_step(snake);
     }
 
-    ///The index in the array.
-    int index = 0;
-
+#pragma omp parallel for
     for (int i = 0; i < n; ++i) {
+        int index = i * n;
+
         if (i % 2 == 0) {
             copy_n(snake.begin() + index, n, matrix[i].begin());
         }
         else {
             copy_n(snake.begin() + index, n, matrix[i].rbegin());
         }
-        index += n;
     }
 }
