@@ -7,7 +7,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in row-major direction.
+ * @details C(n) = 4n^3 - 4n^2 - 2n^2 log_2{n} + (n^3 - n^2)/ 2 = 9/2(n^3 - n^2) - 2n^2 log_2{n}
+ * @details T_{parallel}(n) = 6n + n = 7n
+ *
+ * @note the sorted matrix is sorted in row-major direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -20,8 +23,9 @@ void Four_Way_Mergesort::four_way_mergesort(vector<vector<int>> &matrix) {
 /**
  * The roughsort algorithm of 4-way mergesort.
  *
- * @details C(n) = 4C(n/2) + 2(n^3 - n^2) = O(n^3)
- * @details T_{parallel}(n) = 7n
+ * @details C(n) = 4C(n/2) + 2(n^3 - n^2), C(1) = 0
+ * @details --> C(n) = 4n^3 - 4n^2 - 2n^2 log_2{n}
+ * @details T_{parallel}(n) = 6n
  *
  * @note transform a unsorted matrix into a roughly sorted matrix.
  *
@@ -99,10 +103,17 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
     for (int i = 0; i < k; i++) {
         for (int j = 0; j < k; j += m) { //j = 0 (left), j = m (right)
             if (i < m) { //upper half
-                sort(matrix[i].begin() + j, matrix[i].begin() + j + m); //ascending
+                vector<int> temp(matrix[i].begin() + j, matrix[i].begin() + j + m);
+
+                Odd_Even_Transposition_Sort::odd_even_transposition_sort(temp); //ascending
+                copy(temp.begin(), temp.end(), matrix[i].begin() + j);
             }
             else { //lower half
-                sort(matrix[i].rbegin() + (k - j - m), matrix[i].rbegin() + (k - j)); //descending
+                vector<int> temp(matrix[i].begin() + j, matrix[i].begin() + j + m);
+
+                Odd_Even_Transposition_Sort::odd_even_transposition_sort(temp);
+                reverse(temp.begin(), temp.end()); //descending
+                copy(temp.begin(), temp.end(), matrix[i].begin() + j);
             }
         }
     }
@@ -113,10 +124,11 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
     #pragma omp parallel for
     for (int i = 0; i < k; i++) {
         if (i % 2 == 0) { //even rows descending
-            sort(matrix[i].rbegin(), matrix[i].rend());
+            Odd_Even_Transposition_Sort::odd_even_transposition_sort(matrix[i]);
+            reverse(matrix[i].begin(), matrix[i].end());
         }
         else { //odd rows ascending
-            sort(matrix[i].begin(), matrix[i].end());
+            Odd_Even_Transposition_Sort::odd_even_transposition_sort(matrix[i]);
         }
     }
 
