@@ -1,5 +1,7 @@
 #include "three_n_sort_Schnorr_and_Shamir.h"
 
+#include "../odd-even_transposition_sort/odd_even_transposition_sort.h"
+
 
 /**
  * 3n-sort of Schnorr and Shamir.
@@ -206,13 +208,9 @@ void Three_N_Sort_Schnorr_and_Shamir::odd_even_transposition_sort_snake(vector<v
     }
 
     //partial odd-even transposition sort (n^{3/4} steps)
-    for (int step = 0; step < steps; ++step) {
-        #pragma omp parallel for
-        for (int i = step % 2; i < n * n - 1; i += 2) {
-            if (snake[i] > snake[i + 1]) {
-                swap(snake[i], snake[i + 1]);
-            }
-        }
+    for (int step = 0; step < steps / 2; ++step) {
+        Odd_Even_Transposition_Sort::oets_odd_step(snake);
+        Odd_Even_Transposition_Sort::oets_even_step(snake);
     }
 
     ///The index in the array.
