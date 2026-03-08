@@ -11,6 +11,8 @@ using namespace std;
 class Odd_Even_Transposition_Sort {
 public:
     static void odd_even_transposition_sort(vector<int>& unsorted_array);
+    static void oets_even_step(vector<int>& unsorted_array);
+    static void oets_odd_step(vector<int>& unsorted_array);
 };
 
 

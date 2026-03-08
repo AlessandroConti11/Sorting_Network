@@ -14,35 +14,55 @@
 void Odd_Even_Transposition_Sort::odd_even_transposition_sort(vector<int>& unsorted_array) {
     ///Array size.
     const int array_size = static_cast<int>(unsorted_array.size());
-    ///The array is is_sorted or not.
-    bool is_sorted = false;
 
 
-    while (!is_sorted) {
+    for (int w = 0; w < array_size / 2; ++w) {
         //odd phase
-        ///The local flag for odd phase.
-        bool odd_phase_sorted = true;
-
-        #pragma omp parallel for reduction(&:odd_phase_sorted)
-        for (int i = 1; i < array_size - 1; i += 2) {
-            if (unsorted_array[i] > unsorted_array[i + 1]) {
-                std::swap(unsorted_array[i], unsorted_array[i + 1]);
-                odd_phase_sorted = false;
-            }
-        }
+        oets_odd_step(unsorted_array);;
 
         //even phase
-        ///The local flag for even phase.
-        bool even_phase_sorted = true;
+        oets_even_step(unsorted_array);
+    }
+}
 
-        #pragma omp parallel for reduction(&:even_phase_sorted)
-        for (int i = 0; i < array_size - 1; i += 2) {
-            if (unsorted_array[i] > unsorted_array[i + 1]) {
-                std::swap(unsorted_array[i], unsorted_array[i + 1]);
-                even_phase_sorted = false;
-            }
+/**
+ * The even step.
+ *
+ * @details C(n) = n / 2
+ * @details T_{parallel)(n) = 1
+ *
+ * @param unsorted_array the unsorted array.
+ */
+void Odd_Even_Transposition_Sort::oets_even_step(vector<int>& unsorted_array) {
+    ///Array size.
+    const int array_size = static_cast<int>(unsorted_array.size());
+
+
+#pragma omp parallel for
+    for (int i = 0; i < array_size - 1; i += 2) {
+        if (unsorted_array[i] > unsorted_array[i + 1]) {
+            std::swap(unsorted_array[i], unsorted_array[i + 1]);
         }
+    }
+}
 
-        is_sorted = odd_phase_sorted && even_phase_sorted;
+/**
+ * The odd step.
+ *
+ * @details C(n) = n / 2
+ * @details T_{parallel)(n) = 1
+ *
+ * @param unsorted_array the unsorted array.
+ */
+void Odd_Even_Transposition_Sort::oets_odd_step(vector<int>& unsorted_array) {
+    ///Array size.
+    const int array_size = static_cast<int>(unsorted_array.size());
+
+
+#pragma omp parallel for
+    for (int i = 1; i < array_size - 1; i += 2) {
+        if (unsorted_array[i] > unsorted_array[i + 1]) {
+            std::swap(unsorted_array[i], unsorted_array[i + 1]);
+        }
     }
 }
