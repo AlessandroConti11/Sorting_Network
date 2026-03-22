@@ -101,8 +101,12 @@ void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, const int k) {
 void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
     #pragma omp parallel for
     for (int i = 0; i < n; i++) {
-        if (i % 2 == 1) {
-            reverse(matrix[i].begin(), matrix[i].end());
+        const int half = n / 2;
+
+        for (int k = 1; k < half; k++) {
+            for (int j = half + k - 1; j > 2 * k - 1; j--) {
+                swap(matrix[i][j], matrix[i][j - 1]);
+            }
         }
     }
 }
