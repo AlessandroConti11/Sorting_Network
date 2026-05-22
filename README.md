@@ -31,7 +31,7 @@ The implemented sorting networks are:
 
 In this repository, in addition to the implementation of sorting networks, there is also a python script that compares the various complexities of the implemented algorithms.
 
-For more details, you can read the [slides](bidimensional_sorting_v4.pdf) explaining the various sorting networks in detail.
+For more details, you can read the [slides](bidimensional_sorting.pdf) explaining the various sorting networks in detail.
 
 
 ## How to run
