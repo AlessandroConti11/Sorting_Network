@@ -3,24 +3,24 @@ import numpy as np
 import csv
 
 def ls3_sort(n):
-    return 9 * n
+    return 9 * n - 9
 
 def mergesort_4way(n):
-    return 7 * n
+    return 7 * n - 6
 
 def rotatesort(n):
-    return 10 * n + 8 * np.sqrt(n)
+    return 10 * n + 5 * np.sqrt(n) + 11
 
 def schnorr_shamir(n):
-    return 3 * n + 7 * n**(3/4) + n**(1/4)
+    return 3 * n + 22 * n**(3/4) - 18
 
 def shearsort(n):
-    return n * (np.log2(n) + 3) - 2
+    return n * np.log2(n) + 3 * n - 2
 
-# Range di n
+# Range of n
 n_values = np.arange(1, 211, 1)
 
-# Calcolo valori e conversione a interi
+# Calculating values and converting to integers
 ls3_vals = ls3_sort(n_values).astype(int)
 merge4_vals = mergesort_4way(n_values).astype(int)
 rotate_vals = np.round(rotatesort(n_values)).astype(int)
