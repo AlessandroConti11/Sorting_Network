@@ -9,10 +9,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details C(n) = O(n^3)
- * @details T_{parallel}(n) = 3n + O(n^{3/4})
+ * @details C(n x n) = n^3 + 25/2 n^{11/4} - 9/2 n^2 \log_2{n} - 13 n^2
+ * @details T(n x n) = 3 n + 22 n^{3/4} - 18
  *
- * @note the sorted matrix is sorted in snake direction.
+ * @note The sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -41,8 +41,8 @@ void Three_N_Sort_Schnorr_and_Shamir::three_n_sort(vector<vector<int>> &matrix) 
 /**
  * k-way unshuffle operation of 3n-sort of Schnorr and Shamir.
  *
- * @details C(n) = 0
- * @details T_{parallel}(n) = n
+ * @details C(n x n) = 0
+ * @details T(n x ) = n
  *
  * @param matrix the unsorted matrix.
  * @param k the number of unshuffle way.
@@ -70,8 +70,7 @@ void Three_N_Sort_Schnorr_and_Shamir::k_way_unshuffle(vector<vector<int>> &matri
 /**
  * Function that sorts the blocks of a matrix.
  *
- * @details C(n) = n^{1/2} (9/2((n^{3/4})^3 - (n^{3/4})^2) - 2(n^{3/4})^2 log_2{(n^{3/4})}) = 9/2(n^{9/8} - n^{3/4}) - 2n^{3/4} log_2{n^{3/4}}
- * @details T_{parallel}(n) = 7n^{3/4}
+ * @note Uses the 4-way mergesort.
  *
  * @param matrix the unsorted matrix.
  */
@@ -108,8 +107,7 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_blocks(vector<vector<int>> &matrix) {
 /**
  * Function that sorts the columns of a matrix.
  *
- * @details C(n) = n n(n - 1)/2 = n^2(n - 1)/2
- * @details T_{parallel}(n) = n
+ * @note Uses the odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  */
@@ -138,10 +136,9 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_columns(vector<vector<int>> &matrix) 
 /**
  * Function that sorts the vertical slices.
  *
- * @details C(n) = n^{1/4} ((n n^{3/4})(n n^{3/4} - 1))/2 = n^2 (n^{7/4} - 1)/2
- * @details T_{parallel}(n) = n n^{3/4} = n^{7/4}
+ * @details Not the optimal implementation.
  *
- * @note the vertical slices can be sorted in time O(n^{3/4}), because they contain a region of only n^{1/4} dirty rows
+ * @note The vertical slices can be sorted in time O(n^{3/4}), because they contain a region of only n^{1/4} dirty rows
  * @note e.g. by sorting the blocks and subsequently sorting the blocks vertically overlapping by n^{1/4} rows.
  *
  * @param matrix the unsorted matrix.
@@ -181,8 +178,7 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_vertical_slices(vector<vector<int>> &
 /**
  * Function that sorts the rows in alternating direction.
  *
- * @details C(n) = n n(n - 1)/2 = n^2 (n - 1)/2
- * @details T_{parallel}(n) = n
+ * @note Uses odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  */
@@ -204,10 +200,9 @@ void Three_N_Sort_Schnorr_and_Shamir::sort_rows_alternating_direction(vector<vec
 }
 
 /**
- * Function that executes the odd-even transposition sort to the snake.
+ * Function that executes the n^{3/4} odd-even transposition sort steps to the snake.
  *
- * @details C(n) = n^{3/4}/2 (n^2/2 + n^2/2) = n^{7/4}/2
- * @details T_{parallel}(n) = n^{3/4}
+ * @note Uses odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  */

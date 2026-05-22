@@ -6,7 +6,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in snake direction.
+ * @details C(n x n) = 9/2 n^3 + 3/2 n^{5/2} - 9/2 n^2 - 3/2 n^{3/2} + 19 n
+ * @details T(n x n) = 10 n + 5 \sqrt{n} + 11
+ *
+ * @note The sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -55,6 +58,9 @@ void Rotatesort::rotatesort(vector<vector<int>> &matrix) {
 /**
  * The balance operation of rotatesort.
  *
+ * @details C(n x n) = n^3 - n^2
+ * @details T(n x n) = 2n + \sqrt{n}
+ *
  * @param matrix the matrix.
  */
 void Rotatesort::balance(vector<vector<int>> &matrix) {
@@ -93,6 +99,9 @@ void Rotatesort::balance(vector<vector<int>> &matrix) {
 
 /**
  * The unblock operation of rotatesort.
+ *
+ * @details C(n x n) = 1/2 n^3 - 1/2 n^2
+ * @details T(n x n) = 3/2 n
  * 
  * @param matrix the unsorted matrix.
  */
@@ -105,6 +114,9 @@ void Rotatesort::unblock(vector<vector<int>> &matrix) {
 
 /**
  * The shear operation of rotatesort.
+ *
+ * @details 3C(n x n) = 3/2 n^3 + 3/2 n^2 + 19 n
+ * @details 3T(n x n) = 3 n + 11
  *
  * @param matrix the unsorted array.
  */

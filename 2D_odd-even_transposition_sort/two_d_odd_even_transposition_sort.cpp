@@ -6,7 +6,7 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in snake direction.
+ * @note The sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -33,7 +33,7 @@ void Two_D_Odd_Even_Transposition_Sort::two_d_odd_even_sort(vector<vector<int>>&
 /**
  * Function that sorts a row following the specified direction.
  *
- * @details sorting direction: even rows from left to right and odd rows from right to left.
+ * @note Sorting direction: even rows from left to right and odd rows from right to left.
  *
  * @param matrix the unsorted matrix.
  * @param is_odd the oets step on the rows is either odd or even, true if is odd.

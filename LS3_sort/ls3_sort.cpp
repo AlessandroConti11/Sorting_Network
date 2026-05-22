@@ -6,7 +6,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in snake direction.
+ * @details C(n x n) = 4 n^3 - 1/2 n^2 \log_2{n} - 4 n^2
+ * @details T(n x n) = 9 n - 9
+ *
+ * @note The sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -18,9 +21,8 @@ void LS3_Sort::ls3_sort(vector<vector<int>> &matrix) {
 /**
  * The sort algorithm of LS3 sort.
  *
- * @details C(n) = 4C(n/2) + (4n^3 - n^2)/2, C(1) = 0
- * @details --> C(n) = 4n^3 - 4n^2 - 1/2 n^2 log_2{n}
- * @details T_{parallel}(n) = 9n
+ * @details C(n x n) = 4 n^3 - 1/2 n^2 \log_2{n} - 4 n^2
+ * @details T(n x n) = 9 n - 9
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
@@ -76,8 +78,8 @@ void LS3_Sort::sort_ls3(vector<vector<int>>& matrix, const int n) {
 /**
  * The merge algorithm of LS3 sort.
  *
- * @details C(k) = 0 + k^2(2k - 1)/2 + k^3 = (4k^3 - k^2)/2
- * @details T_{parallel}(k) = k/2 + 2k + 2k = 4.5k
+ * @details C(n x n) = 2 n^3 - 1/2 k^2
+ * @details T(n x n) = 9/2 n
  *
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
@@ -92,8 +94,8 @@ void LS3_Sort::merge_ls3(vector<vector<int>>& matrix, const int k) {
 /**
  * The shuffle basic operation of LS3 sort.
  *
- * @details C(n) = 0 --> no comparator is required
- * @details T_{parallel}(n) = n/2
+ * @details C(n x n) = 0 --> no comparator is required
+ * @details T(n x n) = 1/2 n
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
@@ -114,8 +116,7 @@ void LS3_Sort::shuffle(vector<vector<int>>& matrix, const int n) {
 /**
  * The oets basic operation of LS3 sort.
  *
- * @details C(n) = 2n * n^2/2 = n^3
- * @details T_{parallel}(n) = 2n
+ * @note Uses the odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.
@@ -170,8 +171,8 @@ void LS3_Sort::oets_step(vector<vector<int>>& matrix, const int n) {
 /**
  * Function that sorts each double column in snake-like direction.
  *
- * @details C(n) = n/2 (2n (2n - 1)/2) = n^2 (2n - 1)/2
- * @details T_{parallel}(n) = 2n
+ * @details C(n x n) = n^3 - 1/2 n^2
+ * @details T(n x n) = 2n
  *
  * @param matrix the unsorted matrix.
  * @param n the matrix size.

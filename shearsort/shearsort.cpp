@@ -6,7 +6,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details the sorted matrix is sorted in snake direction.
+ * @details C(n x n) = 1/2 n^3 \log_2{n} + 3/2 n^3 - 1/2 n^2 \log_2{n} - 5/2 n^2 + n
+ * @details T(n x n) = n \log_{2}{n} + 3 n - 2
+ *
+ * @note The sorted matrix is sorted in snake direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -32,7 +35,7 @@ void Shearsort::shearSort(vector<vector<int>>& matrix) {
 /**
  * Function that sorts the rows.
  *
- * @details sorting direction: even rows from left to right and odd rows from right to left.
+ * @note Sorting direction: even rows from left to right and odd rows from right to left.
  *
  * @param matrix the unsorted matrix.
  */

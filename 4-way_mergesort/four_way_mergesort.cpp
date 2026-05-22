@@ -7,10 +7,10 @@
  *
  * @warning work only with a squared matrix.
  *
- * @details C(n) = 4n^3 - 4n^2 - 2n^2 log_2{n} + (n^3 - n^2)/ 2 = 9/2(n^3 - n^2) - 2n^2 log_2{n}
- * @details T_{parallel}(n) = 6n + n = 7n
+ * @details C(n x n) = 4 n^3 - 2 n^2 \log_2{n} - 4 n^2
+ * @details T(n x n) = 7 n - 6
  *
- * @note the sorted matrix is sorted in row-major direction.
+ * @note The sorted matrix is sorted in row-major direction.
  *
  * @param matrix the unsorted matrix.
  */
@@ -23,11 +23,10 @@ void Four_Way_Mergesort::four_way_mergesort(vector<vector<int>> &matrix) {
 /**
  * The roughsort algorithm of 4-way mergesort.
  *
- * @details C(n) = 4C(n/2) + 2(n^3 - n^2), C(1) = 0
- * @details --> C(n) = 4n^3 - 4n^2 - 2n^2 log_2{n}
- * @details T_{parallel}(n) = 6n
+ * @details C(n x n) = 7/2 n^3 - 2 n^2 \log_2{n} - 7/2 n^2
+ * @details T(n x n) = 6 n - 6
  *
- * @note transform a unsorted matrix into a roughly sorted matrix.
+ * @note Transform a unsorted matrix into a roughly sorted matrix.
  *
  * @param matrix the unsorted matrix.
  * @param k the matrix size.
@@ -86,8 +85,8 @@ void Four_Way_Mergesort::roughsort(vector<vector<int>> &matrix, const int k) {
 /**
  * The merge algorithm of 4-way mergesort.
  *
- * @details C(n) = n (n(n - 1)/2) + n (n(n - 1)/2) + n (n(n - 1)/2) + n (n(n - 1)/2) = 2(n^3 - n^2)
- * @details T_{parallel}(n) = n/2 + n + n + n/2 = 3n
+ * @details C(n x n) = 7/4 n^3 - 2 n^2
+ * @details T(n x n) = 3 n
  *
  * @param matrix the unsorted array.
  */
@@ -140,10 +139,7 @@ void Four_Way_Mergesort::merge_four_way_mergesort(vector<vector<int>> &matrix) {
 /**
  * Function that sorts the rows.
  *
- * @details C(n) = n (n(n - 1)/2) = (n^3 - n^2)/2
- * @details T_{parallel}(n) = n
- *
- * @note To sort the rows, use the OETS.
+ * @note Uses the odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  */
@@ -157,8 +153,7 @@ void Four_Way_Mergesort::sort_rows(vector<vector<int>> &matrix) {
 /**
  * Function that sorts the columns.
  *
- * @details C(n) = n (n(n - 1)/2)
- * @details T_{parallel}(n) = n
+ * @note Uses the odd-even transposition sort.
  *
  * @param matrix the unsorted matrix.
  */

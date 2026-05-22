@@ -9,6 +9,6 @@ The merge algorithm use of the basic operations shuffle and oets.
 
 ## Computational Cost
 
-The computational cost of LS3 sort is $\mathcal{O}{\left(n\right)}$.
-More precisely: the merge procedures require ${4.5 n}$ comparators. 
-So totally we have $4.5 {\left(n + \frac{n}{2} + \frac{n}{4} + \ldots + 2\right)} \leq {9 n}$ operations.
+The computational costs of LS3-sort are:
+- $T{\left(n \times n\right)} = 9 n - 9$ the number of steps;
+- $C{\left(n \times n\right)} = 4 n^3 -\frac{1}{2} n^2 \log_2{n} - 4 n^2$ the number of comparators;
